@@ -25,7 +25,19 @@ input {
 
 #game-world {
     position: relative;
+
     width: 100%;
-    min-height: 100vh;
+    height: 70vh;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #35231e 0%,
+            #241714 70%,
+            #180f0d 100%
+        );
+
+    border-radius: 12px;
+
     overflow: hidden;
 }
