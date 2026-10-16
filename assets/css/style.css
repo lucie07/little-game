@@ -25,10 +25,8 @@ input {
 
 #game-world {
     position: relative;
-
     width: 100%;
     height: 70vh;
-
     background:
         radial-gradient(
             circle at center,
@@ -36,13 +34,65 @@ input {
             #241714 70%,
             #180f0d 100%
         );
-
     border-radius: 6px;
-
     overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* first yarn ball element */
+.yarn-stage {
+    width: 320px;
+    max-width: 70vw;
+}
+
+.yarn-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+.yarn-base {
+    fill: #2db7f2;
+}
+
+.yarn-core {
+    fill: #127ec8;
+}
+
+.yarn-tail {
+    fill: none;
+    stroke: #22aae9;
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.wraps {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.wraps-back path {
+    stroke: #1f97dc;
+    stroke-width: 10;
+}
+
+.wraps-front path {
+    stroke: #67d2ff;
+    stroke-width: 8;
+}
+
+.wraps-side path {
+    stroke: #56c7fb;
+    stroke-width: 7;
+}
+
+/* first yarn ball element-3d version */
+/*
 .yarn-wrapper {
     position: absolute;
 
@@ -282,3 +332,5 @@ input {
     border-right: none;
     transform: rotate(-18deg);
 }
+
+*/
