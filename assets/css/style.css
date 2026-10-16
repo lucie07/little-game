@@ -135,17 +135,8 @@ input {
 }
 
 .thread-tail {
-    position: absolute;
-    left: calc(50% + 28px);
-    top: 118px;
-    width: 70px;
-    height: 45px;
-    border-bottom: 4px solid #c86f87;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    border-radius: 0 0 50px 50px;
-    transform: rotate(18deg);
-    opacity: 0.95;
+    transform-origin: top left;
+    animation: thread-sway 2.8s ease-in-out infinite;
 }
 
 @keyframes yarn-float {
@@ -169,3 +160,15 @@ input {
         transform: translate(-50%, -50%) translate(0, 0) rotate(-2deg);
     }
 }
+
+@keyframes thread-sway {
+    0%,
+    100% {
+        transform: rotate(12deg);
+    }
+
+    50% {
+        transform: rotate(24deg);
+    }
+}
+
