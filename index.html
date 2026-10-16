@@ -16,22 +16,69 @@
 
         <div id="game-world">
             <!-- game board -->
-            <div class="yarn-wrapper">
-                <div class="yarn-shadow"></div>
+        <div class="yarn-stage">
+            <svg class="yarn-svg" viewBox="0 0 320 320" aria-label="Cute yarn ball illustration" role="img">
+                <defs>
+                    <clipPath id="ballClip">
+                        <circle cx="150" cy="155" r="72"></circle>
+                    </clipPath>
+                </defs>
 
-                <div class="yarn-ball">
-                    <span class="strand strand-1"></span>
-                    <span class="strand strand-2"></span>
-                    <span class="strand strand-3"></span>
-                    <span class="strand strand-4"></span>
-                    <span class="strand strand-5"></span>
-                    <span class="strand strand-6"></span>
-                    <span class="strand strand-7"></span>
-                    <span class="strand strand-8"></span>
-                </div>
+                <!-- tail -->
+                <path
+                    class="yarn-tail"
+                    d="M210 215
+                    C245 225, 260 245, 255 270
+                    C250 292, 220 296, 202 286
+                    C188 278, 191 258, 208 253
+                    C225 248, 242 258, 248 274"
+                />
 
-                <div class="thread-tail"></div>
-            </div>
+                <!-- base ball -->
+                <circle class="yarn-base" cx="150" cy="155" r="72"></circle>
+
+                <!-- inner opening / shadow shape -->
+                <path
+                    class="yarn-core"
+                    d="M132 108
+                    C145 94, 171 96, 184 115
+                    C194 130, 193 154, 182 178
+                    C171 201, 155 215, 144 223
+                    C132 212, 121 196, 116 175
+                    C111 152, 116 123, 132 108 Z"
+                />
+
+                <!-- clipped yarn strands -->
+                <g clip-path="url(#ballClip)">
+                    <!-- darker under wraps -->
+                    <g class="wraps wraps-back">
+                        <path d="M96 88 C86 130, 88 182, 120 228" />
+                        <path d="M114 82 C102 126, 104 186, 136 236" />
+                        <path d="M132 80 C118 126, 120 190, 152 238" />
+                        <path d="M150 81 C136 128, 138 193, 168 238" />
+                        <path d="M168 84 C154 132, 157 194, 183 236" />
+                        <path d="M186 90 C176 136, 178 190, 198 228" />
+                    </g>
+
+                    <!-- front wraps -->
+                    <g class="wraps wraps-front">
+                        <path d="M78 166 C110 135, 162 116, 226 108" />
+                        <path d="M76 182 C109 149, 164 130, 230 124" />
+                        <path d="M74 198 C110 164, 166 145, 232 141" />
+                        <path d="M78 214 C114 179, 169 160, 232 158" />
+                        <path d="M88 228 C122 194, 173 176, 230 175" />
+                        <path d="M102 238 C133 209, 179 192, 226 190" />
+                    </g>
+
+                    <!-- top/side wraps -->
+                    <g class="wraps wraps-side">
+                        <path d="M92 116 C122 92, 176 87, 214 112" />
+                        <path d="M88 134 C120 108, 178 103, 220 128" />
+                        <path d="M88 152 C122 125, 181 121, 222 144" />
+                    </g>
+                </g>
+            </svg>
+        </div>
 
         </div>
     </main>
