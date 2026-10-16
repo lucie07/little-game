@@ -41,3 +41,111 @@ input {
 
     overflow: hidden;
 }
+
+/* first yarn ball element */
+.yarn-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 180px;
+    height: 180px;
+    transform: translate(-50%, -50%);
+    animation: yarn-pop 0.8s ease-out forwards, yarn-float 3s ease-in-out 0.8s infinite;
+}
+
+.yarn-shadow {
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    width: 110px;
+    height: 24px;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 50%;
+    filter: blur(6px);
+}
+
+.yarn-ball {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    width: 130px;
+    height: 130px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #f3b7c5 0%, #d97c94 45%, #b4516b 100%);
+    box-shadow:
+        inset -10px -12px 18px rgba(0, 0, 0, 0.18),
+        inset 10px 10px 16px rgba(255, 255, 255, 0.18);
+}
+
+.strand {
+    position: absolute;
+    border: 3px solid rgba(123, 39, 64, 0.45);
+    border-radius: 50%;
+    background: transparent;
+}
+
+.strand-1 {
+    width: 88px;
+    height: 28px;
+    top: 18px;
+    left: 18px;
+    border-left: none;
+    border-right: none;
+    transform: rotate(12deg);
+}
+
+.strand-2 {
+    width: 92px;
+    height: 32px;
+    top: 42px;
+    left: 16px;
+    border-left: none;
+    border-right: none;
+    transform: rotate(-10deg);
+}
+
+.strand-3 {
+    width: 78px;
+    height: 26px;
+    top: 66px;
+    left: 24px;
+    border-left: none;
+    border-right: none;
+    transform: rotate(8deg);
+}
+
+.strand-4 {
+    width: 34px;
+    height: 92px;
+    top: 18px;
+    left: 48px;
+    border-top: none;
+    border-bottom: none;
+    transform: rotate(16deg);
+}
+
+.strand-5 {
+    width: 28px;
+    height: 82px;
+    top: 24px;
+    left: 70px;
+    border-top: none;
+    border-bottom: none;
+    transform: rotate(-14deg);
+}
+
+.thread-tail {
+    position: absolute;
+    left: calc(50% + 28px);
+    top: 118px;
+    width: 70px;
+    height: 45px;
+    border-bottom: 4px solid #c86f87;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-radius: 0 0 50px 50px;
+    transform: rotate(18deg);
+    opacity: 0.95;
+}
