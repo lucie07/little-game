@@ -71,6 +71,56 @@ document.addEventListener('DOMContentLoaded', () => {
         nextChange = time + random(2800, 5400);
     }
 
+    function animate(time) {
+
+        const dt = lastTime
+            ? Math.min((time - lastTime) / 1000, 0.05)
+            : 0.016;
+
+        lastTime = time;
+
+        if (time >= nextChange) {
+            chooseNewTarget(time);
+        }
+
+        const ax =
+            (target.x - position.x) * settings.spring;
+
+        const ay =
+            (target.y - position.y) * settings.spring
+            - settings.buoyancy;
+
+        const ar =
+            (target.rotation - position.rotation) * 2.2;
+
+        velocity.x += ax * dt;
+        velocity.y += ay * dt;
+        velocity.rotation += ar * dt;
+
+        const resistance = Math.exp(-settings.drag * dt);
+
+        velocity.x *= resistance;
+        velocity.y *= resistance;
+        velocity.rotation *= Math.exp(-2 * dt);
+
+        // update position using momentum
+        position.x += velocity.x * dt;
+        position.y += velocity.y * dt;
+        position.rotation += velocity.rotation * dt;
+
+        // apply motion to the yarn
+        yarn.style.transform = `
+            translate3d(
+                ${position.x}px,
+                ${position.y}px,
+                0
+            )
+            rotate(${position.rotation}deg)
+        `;
+
+        requestAnimationFrame(animate);
+    }
+
     requestAnimationFrame(animate);
 
 });
