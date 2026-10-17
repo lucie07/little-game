@@ -17,106 +17,47 @@
         <div id="game-world">
             <!-- game board -->
         <div class="yarn-stage">
-            <svg class="yarn-svg" viewBox="0 0 320 320" aria-label="Cute yarn ball illustration" role="img">
-                <defs>
-                    <path id="yarnShape"
-                        d="M150 82
-                            C174 81, 197 88, 212 102
-                            C226 115, 232 133, 229 154
-                            C231 175, 224 197, 209 213
-                            C194 228, 176 236, 153 237
-                            C130 239, 109 234, 93 221
-                            C77 208, 69 187, 70 164
-                            C68 141, 74 120, 88 105
-                            C103 91, 126 83, 150 82 Z" />
-                    
-                    <clipPath id="ballClip">
-                        <use href="#yarnShape"></use>
-                    </clipPath>
-                </defs>
-
+            <svg class="yarn-svg yarn-svg-flat" viewBox="0 0 360 320" aria-label="Flat illustrated yarn ball" role="img">
                 <!-- tail -->
                 <path
                     class="yarn-tail"
-                    d="M210 215
-                    C245 225, 260 245, 255 270
-                    C250 292, 220 296, 202 286
-                    C188 278, 191 258, 208 253
-                    C225 248, 242 258, 248 274"
+                    d="M240 72
+                    C270 30, 320 28, 338 58
+                    C352 82, 343 110, 320 122
+                    C293 137, 258 131, 240 110"
                 />
 
-                <!-- base ball -->
-                <use href="#yarnShape" class="yarn-base"></use>
-                <use href="#yarnShape" class="yarn-outline"></use>
+                <!-- main yarn body -->
+                <ellipse class="yarn-body" cx="155" cy="170" rx="118" ry="112" />
 
-                <!-- inner opening / shadow shape -->
-                <path
-                    class="yarn-core"
-                    d="M132 108
-                    C145 94, 171 96, 184 115
-                    C194 130, 193 154, 182 178
-                    C171 201, 155 215, 144 223
-                    C132 212, 121 196, 116 175
-                    C111 152, 116 123, 132 108 Z"
-                />
+                <!-- yarn bands -->
+                <g class="yarn-bands">
+                    <!-- top left -->
+                    <path d="M56 120 C72 103, 84 87, 100 72" />
+                    <path d="M52 154 C70 132, 84 112, 102 92" />
+                    <path d="M54 190 C72 165, 89 141, 108 118" />
+                    <path d="M63 227 C81 196, 97 167, 118 138" />
 
-                <!-- clipped yarn strands -->
-                <g clip-path="url(#ballClip)">
-                    <!-- darker under wraps -->
-                    <g class="wraps wraps-back">
-                        <path d="M96 88 C86 130, 88 182, 120 228" />
-                        <path d="M114 82 C102 126, 104 186, 136 236" />
-                        <path d="M132 80 C118 126, 120 190, 152 238" />
-                        <path d="M150 81 C136 128, 138 193, 168 238" />
-                        <path d="M168 84 C154 132, 157 194, 183 236" />
-                        <path d="M186 90 C176 136, 178 190, 198 228" />
-                    </g>
+                    <!-- left lower -->
+                    <path d="M82 252 C94 218, 109 186, 130 154" />
+                    <path d="M113 270 C117 230, 129 192, 148 158" />
 
-                    <!-- front wraps -->
-                    <g class="wraps wraps-front">
-                        <path d="M78 166 C110 135, 162 116, 226 108" />
-                        <path d="M76 182 C109 149, 164 130, 230 124" />
-                        <path d="M74 198 C110 164, 166 145, 232 141" />
-                        <path d="M78 214 C114 179, 169 160, 232 158" />
-                        <path d="M88 228 C122 194, 173 176, 230 175" />
-                        <path d="M102 238 C133 209, 179 192, 226 190" />
-                    </g>
+                    <!-- centre sweeping bands -->
+                    <path d="M102 70 C138 77, 180 94, 228 124" />
+                    <path d="M104 96 C148 102, 194 122, 246 152" />
+                    <path d="M108 124 C155 132, 206 150, 258 180" />
+                    <path d="M112 152 C162 160, 212 180, 262 208" />
+                    <path d="M120 182 C168 194, 212 213, 250 238" />
 
-                    <!-- top/side wraps -->
-                    <g class="wraps wraps-side">
-                        <path d="M92 116 C122 92, 176 87, 214 112" />
-                        <path d="M88 134 C120 108, 178 103, 220 128" />
-                        <path d="M88 152 C122 125, 181 121, 222 144" />
-                    </g>
-                    <g class="edge-fibres">
-                        <!-- top left -->
-                        <path d="M96 101 C89 96, 83 95, 79 100" />
-                        <path d="M112 90 C106 84, 99 83, 95 88" />
-                        <path d="M130 84 C125 78, 117 77, 112 82" />
+                    <!-- right side curved bands -->
+                    <path d="M188 120 C220 95, 251 79, 280 69" />
+                    <path d="M177 154 C218 126, 252 108, 283 98" />
+                    <path d="M170 190 C211 157, 248 135, 282 122" />
+                    <path d="M170 226 C205 193, 237 168, 266 142" />
 
-                        <!-- top -->
-                        <path d="M150 81 C147 73, 155 72, 160 79" />
-                        <path d="M171 84 C170 76, 178 76, 182 83" />
-                        <path d="M190 92 C191 84, 199 84, 202 91" />
-
-                        <!-- right -->
-                        <path d="M219 110 C228 106, 232 111, 229 118" />
-                        <path d="M227 133 C236 132, 238 139, 232 144" />
-                        <path d="M228 160 C238 162, 238 169, 231 172" />
-                        <path d="M222 188 C230 193, 228 200, 220 201" />
-
-                        <!-- bottom -->
-                        <path d="M202 214 C208 222, 204 229, 196 227" />
-                        <path d="M176 230 C178 239, 170 242, 164 236" />
-                        <path d="M147 236 C145 244, 136 244, 134 236" />
-                        <path d="M119 232 C115 239, 107 237, 106 229" />
-
-                        <!-- left -->
-                        <path d="M92 219 C84 225, 77 221, 80 213" />
-                        <path d="M78 197 C69 200, 65 194, 70 188" />
-                        <path d="M72 171 C62 171, 61 163, 69 160" />
-                        <path d="M72 143 C63 140, 64 132, 72 131" />
-                    </g>                    
+                    <!-- lower wrap area -->
+                    <path d="M132 264 C164 242, 194 224, 224 201" />
+                    <path d="M170 277 C194 256, 216 239, 237 220" />
                 </g>
             </svg>
         </div>
