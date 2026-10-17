@@ -43,8 +43,8 @@ input {
 }
 
 .yarn-stage {
-    width: 320px;
-    max-width: 70vw;
+    width: 420px;
+    max-width: 72vw;
 }
 
 .yarn-svg {
@@ -54,57 +54,25 @@ input {
     overflow: visible;
 }
 
-.yarn-base {
-    fill: #2db7f2;
+/* flat graphic yarn style */
+.yarn-svg-flat .yarn-body {
+    fill: #de5b84;
 }
 
-.yarn-outline {
+.yarn-svg-flat .yarn-tail {
     fill: none;
-    stroke: #1e9cde;
-    stroke-width: 3;
-    opacity: 0.85;
-}
-
-.yarn-core {
-    fill: #127ec8;
-}
-
-.yarn-tail {
-    fill: none;
-    stroke: #22aae9;
-    stroke-width: 8;
+    stroke: #de5b84;
+    stroke-width: 16;
     stroke-linecap: round;
     stroke-linejoin: round;
 }
 
-.wraps {
+.yarn-svg-flat .yarn-bands path {
     fill: none;
-    stroke-linecap: round;
+    stroke: #ffc0d3;
+    stroke-width: 12;
+    stroke-linecap: butt;
     stroke-linejoin: round;
-}
-
-.wraps-back path {
-    stroke: #1f97dc;
-    stroke-width: 10;
-}
-
-.wraps-front path {
-    stroke: #67d2ff;
-    stroke-width: 8;
-}
-
-.wraps-side path {
-    stroke: #56c7fb;
-    stroke-width: 7;
-}
-
-.edge-fibres path {
-    fill: none;
-    stroke: #38baf4;
-    stroke-width: 5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    opacity: 0.95;
 }
 
 
