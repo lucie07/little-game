@@ -58,6 +58,13 @@ input {
     fill: #2db7f2;
 }
 
+.yarn-outline {
+    fill: none;
+    stroke: #1e9cde;
+    stroke-width: 3;
+    opacity: 0.85;
+}
+
 .yarn-core {
     fill: #127ec8;
 }
@@ -90,6 +97,16 @@ input {
     stroke: #56c7fb;
     stroke-width: 7;
 }
+
+.edge-fibres path {
+    fill: none;
+    stroke: #38baf4;
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.95;
+}
+
 
 /* first yarn ball element-3d version */
 /*
