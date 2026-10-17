@@ -1,16 +1,24 @@
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const yarn = document.querySelector('.yarn-stage');
+    const gameWorld = document.querySelector('#game-world');
 
-    if (!yarn) return;
+    if (!yarn || !gameWorld) return;
 
-    // respect reduced-motion accessibility settings
+    // respect reduced-motion preferences
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         return;
     }
 
-    // current yarn position
-    const current = {
+    // current position
+    const position = {
+        x: 0,
+        y: 0,
+        rotation: 0
+    };
+
+    const velocity = {
         x: 0,
         y: 0,
         rotation: 0
@@ -22,6 +30,16 @@ document.addEventListener('DOMContentLoaded', () => {
         rotation: 0
     };
 
+    // floating behaviour settings
+    const settings = {
+        spring: 1.8,
+        drag: 1.4,
+        buoyancy: 5,
+        maxRotation: 4,
+        horizontalRange: 42,
+        verticalRange: 35
+    };
+
     let nextChange = 0;
     let lastTime = 0;
 
@@ -31,44 +49,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function chooseNewTarget(time) {
 
-        target.x = random(-35, 35);
-        target.y = random(-30, 30);
-        target.rotation = random(-4, 4);
+        const maxX = Math.max(0, Math.min(
+            settings.horizontalRange,
+            (gameWorld.clientWidth - yarn.offsetWidth) / 2 - 12
+        ));
 
-        nextChange = time + random(2500, 5500);
-    }
+        const maxY = Math.max(0, Math.min(
+            settings.verticalRange,
+            (gameWorld.clientHeight - yarn.offsetHeight) / 2 - 12
+        ));
 
-    // floating animation
-    function animate(time) {
+        target.x = random(-maxX, maxX);
 
-        const dt = lastTime
-            ? Math.min((time - lastTime) / 1000, 0.05)
-            : 0.016;
+        target.y = random(-maxY, maxY * 0.65);
 
-        lastTime = time;
+        target.rotation = random(
+            -settings.maxRotation,
+            settings.maxRotation
+        );
 
-        if (time >= nextChange) {
-            chooseNewTarget(time);
-        }
-
-        const ease = 1 - Math.exp(-dt / 1.6);
-
-        current.x += (target.x - current.x) * ease;
-        current.y += (target.y - current.y) * ease;
-        current.rotation +=
-            (target.rotation - current.rotation) * ease;
-
-        // apply the movement
-        yarn.style.transform = `
-            translate3d(
-                ${current.x}px,
-                ${current.y}px,
-                0
-            )
-            rotate(${current.rotation}deg)
-        `;
-
-        requestAnimationFrame(animate);
+        nextChange = time + random(2800, 5400);
     }
 
     requestAnimationFrame(animate);
