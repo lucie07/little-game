@@ -38,6 +38,39 @@ document.addEventListener('DOMContentLoaded', () => {
         nextChange = time + random(2500, 5500);
     }
 
+    // floating animation
+    function animate(time) {
+
+        const dt = lastTime
+            ? Math.min((time - lastTime) / 1000, 0.05)
+            : 0.016;
+
+        lastTime = time;
+
+        if (time >= nextChange) {
+            chooseNewTarget(time);
+        }
+
+        const ease = 1 - Math.exp(-dt / 1.6);
+
+        current.x += (target.x - current.x) * ease;
+        current.y += (target.y - current.y) * ease;
+        current.rotation +=
+            (target.rotation - current.rotation) * ease;
+
+        // apply the movement
+        yarn.style.transform = `
+            translate3d(
+                ${current.x}px,
+                ${current.y}px,
+                0
+            )
+            rotate(${current.rotation}deg)
+        `;
+
+        requestAnimationFrame(animate);
+    }
+
     requestAnimationFrame(animate);
 
 });
