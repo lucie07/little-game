@@ -27,6 +27,7 @@ input {
     position: relative;
     width: 100%;
     height: 70vh;
+
     background:
         radial-gradient(
             circle at center,
@@ -34,6 +35,7 @@ input {
             #241714 70%,
             #180f0d 100%
         );
+
     border-radius: 6px;
     overflow: hidden;
 
@@ -43,13 +45,17 @@ input {
 }
 
 .yarn-stage {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 280px;
+    max-width: 70vw;
+
+    transform-origin: center center;
+    will-change: transform;
 }
 
+/* SVG image */
 .yarn-ball {
-    width: 280px;
+    display: block;
+    width: 100%;
     height: auto;
 }
 
