@@ -43,36 +43,14 @@ input {
 }
 
 .yarn-stage {
-    width: 420px;
-    max-width: 72vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.yarn-svg {
-    display: block;
-    width: 100%;
+.yarn-ball {
+    width: 280px;
     height: auto;
-    overflow: visible;
-}
-
-/* flat graphic yarn style */
-.yarn-svg-flat .yarn-body {
-    fill: #de5b84;
-}
-
-.yarn-svg-flat .yarn-tail {
-    fill: none;
-    stroke: #de5b84;
-    stroke-width: 16;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.yarn-svg-flat .yarn-bands path {
-    fill: none;
-    stroke: #ffc0d3;
-    stroke-width: 12;
-    stroke-linecap: butt;
-    stroke-linejoin: round;
 }
 
 
