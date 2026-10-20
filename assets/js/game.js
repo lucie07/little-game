@@ -4,14 +4,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const yarn = document.querySelector('.yarn-stage');
     const gameWorld = document.querySelector('#game-world');
 
-    // game entry & background music
+    // game screens & background music
 
-    const startButton = document.querySelector('#start-button');
-    const entryScreen = document.querySelector('#game');
+    // screens
+    const welcomeScreen = document.querySelector('#welcome-screen');
+    const yarnScreen = document.querySelector('#game');
     const gameplayScreen = document.querySelector('#gameplay-screen');
+
+    // buttons
+    const startButton = document.querySelector('#start-button');
+    const playButton = document.querySelector('#play-button');
+
+    // audio
     const backgroundMusic = document.querySelector('#background-music');
 
-    // background music volume settings
+    // set background music volume
     if (backgroundMusic) {
         backgroundMusic.volume = 0.35;
     }
