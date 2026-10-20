@@ -4,31 +4,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const yarn = document.querySelector('.yarn-stage');
     const gameWorld = document.querySelector('#game-world');
 
-    // background music
+    // game entry & background music
 
+    const startButton = document.querySelector('#start-button');
+    const entryScreen = document.querySelector('#game');
+    const gameplayScreen = document.querySelector('#gameplay-screen');
     const backgroundMusic = document.querySelector('#background-music');
 
+    // background music volume settings
     if (backgroundMusic) {
-
-        // set volume, 0 = silent, 1 = maximum
         backgroundMusic.volume = 0.35;
+    }
 
-        // start music after first user interaction
-        async function startBackgroundMusic() {
+    // start game
+    if (startButton && entryScreen && gameplayScreen) {
 
-            try {
-                await backgroundMusic.play();
+        startButton.addEventListener('click', () => {
 
-                document.removeEventListener('click', startBackgroundMusic);
-                document.removeEventListener('keydown', startBackgroundMusic);
-
-            } catch (error) {
-                console.warn('Background music could not start:', error);
+            // start music
+            if (backgroundMusic) {
+                backgroundMusic.play().catch(error => {
+                    console.warn('Music could not start:', error);
+                });
             }
-        }
 
-        document.addEventListener('click', startBackgroundMusic);
-        document.addEventListener('keydown', startBackgroundMusic);
+            entryScreen.hidden = true;
+
+            gameplayScreen.hidden = false;
+
+        });
+
     }
 
     if (!yarn || !gameWorld) return;
