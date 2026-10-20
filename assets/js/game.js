@@ -41,6 +41,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
+    // screen 2 to screen 3
+    playButton.addEventListener('click', () => {
+
+        yarnScreen.hidden = true;
+
+        gameplayScreen.hidden = false;
+
+        document.querySelector('#gameplay-heading')
+            .focus({ preventScroll: true });
+
+    });
+
     if (!yarn || !gameWorld) return;
 
     // respect reduced-motion preferences
