@@ -59,6 +59,11 @@ input {
     height: auto;
 }
 
+[hidden] {
+    display: none !important;
+}
+
+
 
 /* first yarn ball element-3d version */
 /*
