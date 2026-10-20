@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (backgroundMusic) {
 
+        // set volume, 0 = silent, 1 = maximum
+        backgroundMusic.volume = 0.35;
+
         // start music after first user interaction
         async function startBackgroundMusic() {
 
