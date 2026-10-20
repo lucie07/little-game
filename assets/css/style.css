@@ -125,6 +125,53 @@ input {
     }
 }
 
+/* screen 2 settings */
+
+.settings-button {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+
+    z-index: 10;
+
+    padding: 10px 20px;
+
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+
+    font-size: 0.9rem;
+    cursor: pointer;
+
+    transition: background 0.3s ease;
+}
+
+.settings-button:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.settings-dialog {
+    width: min(90%, 380px);
+
+    padding: 28px;
+
+    background: #f9f3ec;
+    color: #3c2921;
+
+    border: none;
+    border-radius: 16px;
+
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* dark overlay behind window */
+.settings-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.45);
+}
+
+
 /* first yarn ball element-3d version */
 /*
 .yarn-wrapper {
