@@ -23,25 +23,23 @@ document.addEventListener('DOMContentLoaded', () => {
         backgroundMusic.volume = 0.35;
     }
 
-    // start game
-    if (startButton && entryScreen && gameplayScreen) {
+    // screen 1 to screen 2
+    startButton.addEventListener('click', () => {
 
-        startButton.addEventListener('click', () => {
+        // start background music
+        if (backgroundMusic) {
+            backgroundMusic.play().catch(error => {
+                console.warn('Music could not start:', error);
+            });
+        }
 
-            // start music
-            if (backgroundMusic) {
-                backgroundMusic.play().catch(error => {
-                    console.warn('Music could not start:', error);
-                });
-            }
+        welcomeScreen.hidden = true;
 
-            entryScreen.hidden = true;
+        yarnScreen.hidden = false;
 
-            gameplayScreen.hidden = false;
+        playButton.focus({ preventScroll: true });
 
-        });
-
-    }
+    });
 
     if (!yarn || !gameWorld) return;
 
