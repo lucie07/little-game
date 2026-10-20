@@ -171,6 +171,79 @@ input {
     background: rgba(0, 0, 0, 0.45);
 }
 
+.settings-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 30px;
+}
+
+.settings-header h2 {
+    margin: 0;
+
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.close-settings {
+    background: none;
+    border: none;
+
+    color: #3c2921;
+
+    font-size: 1.8rem;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+/* music volume */
+
+.volume-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 16px;
+}
+
+.volume-header label {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+#music-volume-value {
+    font-size: 0.9rem;
+    color: #765646;
+}
+
+#music-volume {
+    display: block;
+    width: 100%;
+
+    margin: 0;
+
+    accent-color: #9b725e;
+    cursor: pointer;
+}
+
+.volume-labels {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 8px;
+
+    font-size: 0.75rem;
+    color: #765646;
+}
+
+.settings-button:focus-visible,
+.close-settings:focus-visible,
+#music-volume:focus-visible {
+    outline: 3px solid #9b725e;
+    outline-offset: 4px;
+}
 
 /* first yarn ball element-3d version */
 /*
