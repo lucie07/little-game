@@ -4,6 +4,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const yarn = document.querySelector('.yarn-stage');
     const gameWorld = document.querySelector('#game-world');
 
+    // background music
+
+    const backgroundMusic = document.querySelector('#background-music');
+
+    if (backgroundMusic) {
+
+        // start music after first user interaction
+        async function startBackgroundMusic() {
+
+            try {
+                await backgroundMusic.play();
+
+                document.removeEventListener('click', startBackgroundMusic);
+                document.removeEventListener('keydown', startBackgroundMusic);
+
+            } catch (error) {
+                console.warn('Background music could not start:', error);
+            }
+        }
+
+        document.addEventListener('click', startBackgroundMusic);
+        document.addEventListener('keydown', startBackgroundMusic);
+    }
+
     if (!yarn || !gameWorld) return;
 
     // respect reduced-motion preferences
