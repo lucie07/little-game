@@ -63,7 +63,68 @@ input {
     display: none !important;
 }
 
+.start-button {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
 
+    z-index: 10;
+
+    padding: 16px 56px;
+
+    background: #e9c59d;
+    color: #3c2921;
+
+    border: none;
+    border-radius: 50px;
+
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+
+    cursor: pointer;
+
+    transition:
+        background 0.3s ease,
+        transform 0.3s ease;
+}
+
+.start-button:hover {
+    background: #f5d8b8;
+    transform: translateX(-50%) translateY(-4px);
+}
+
+.start-button:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 4px;
+}
+
+
+/* gameplay screen */
+
+#gameplay-screen {
+    min-height: 100vh;
+    min-height: 100svh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #1e293d;
+    color: #f5e8d8;
+}
+
+.gameplay-content {
+    text-align: center;
+    padding: 32px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .start-button {
+        transition: none;
+    }
+}
 
 /* first yarn ball element-3d version */
 /*
