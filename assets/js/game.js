@@ -123,9 +123,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // start background music
         if (backgroundMusic) {
+
+            initialiseMusicAudio();
+
+            // activate web audio on mobile
+            if (audioContext) {
+                audioContext.resume().catch(error => {
+                    console.warn('AudioContext could not resume:', error);
+                });
+            }
+
             backgroundMusic.play().catch(error => {
                 console.warn('Music could not start:', error);
             });
+
         }
 
         welcomeScreen.hidden = true;
