@@ -23,6 +23,29 @@ document.addEventListener('DOMContentLoaded', () => {
         backgroundMusic.volume = 0.35;
     }
 
+    // settings window
+
+    // elements
+    const settingsButton = document.querySelector('#settings-button');
+    const settingsDialog = document.querySelector('#settings-dialog');
+    const closeSettings = document.querySelector('#close-settings');
+
+    const musicVolume = document.querySelector('#music-volume');
+    const musicVolumeValue = document.querySelector('#music-volume-value');
+
+    // open settings
+    settingsButton.addEventListener('click', () => {
+
+        settingsDialog.showModal();
+
+    });
+
+    closeSettings.addEventListener('click', () => {
+
+        settingsDialog.close();
+
+    });
+
     // screen 1 to screen 2
     startButton.addEventListener('click', () => {
 
