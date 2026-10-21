@@ -103,15 +103,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // music volume control
 
-    // match slider to current audio volume
-    musicVolume.value = Math.round(backgroundMusic.volume * 100);
+    musicVolume.value = Math.round(musicLevel * 100);
     musicVolumeValue.textContent = `${musicVolume.value}%`;
 
+    // update volume in real time
     musicVolume.addEventListener('input', () => {
 
-        const volume = Number(musicVolume.value) / 100;
-
-        backgroundMusic.volume = volume;
+        setMusicVolume(musicVolume.value);
 
         // update displayed percentage
         musicVolumeValue.textContent = `${musicVolume.value}%`;
