@@ -59,6 +59,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // music volume
+    function setMusicVolume(percent) {
+
+        musicLevel = Math.max(0, Math.min(1, Number(percent) / 100));
+
+        if (musicGain) {
+
+            // Web Audio volume control
+            musicGain.gain.value = musicLevel;
+
+        } else if (backgroundMusic) {
+
+            // Fallback for browsers without Web Audio
+            backgroundMusic.volume = musicLevel;
+            backgroundMusic.muted = musicLevel === 0;
+
+        }
+    }
 
     // settings window
 
