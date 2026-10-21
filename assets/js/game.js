@@ -15,13 +15,50 @@ document.addEventListener('DOMContentLoaded', () => {
     const startButton = document.querySelector('#start-button');
     const playButton = document.querySelector('#play-button');
 
-    // audio
+    // background music web audio API
     const backgroundMusic = document.querySelector('#background-music');
 
-    // set background music volume
+    let audioContext = null;
+    let musicGain = null;
+    let musicLevel = 0.35;
+
+    // initial volume - fallback for standard HTML audio
     if (backgroundMusic) {
-        backgroundMusic.volume = 0.35;
+        backgroundMusic.volume = musicLevel;
     }
+
+    function initialiseMusicAudio() {
+
+        if (!backgroundMusic || audioContext) return;
+
+        const AudioContextClass =
+            window.AudioContext || window.webkitAudioContext;
+
+        if (!AudioContextClass) return;
+
+        try {
+            const context = new AudioContextClass();
+
+            const source = context.createMediaElementSource(backgroundMusic);
+
+            const gain = context.createGain();
+
+            source.connect(gain);
+            gain.connect(context.destination);
+
+            gain.gain.value = musicLevel;
+
+            // set web audio to control the volume
+            backgroundMusic.volume = 1;
+
+            audioContext = context;
+            musicGain = gain;
+
+        } catch (error) {
+            console.warn('Web Audio setup failed:', error);
+        }
+    }
+
 
     // settings window
 
@@ -47,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // music volume control
-    
+
     // match slider to current audio volume
     musicVolume.value = Math.round(backgroundMusic.volume * 100);
     musicVolumeValue.textContent = `${musicVolume.value}%`;
