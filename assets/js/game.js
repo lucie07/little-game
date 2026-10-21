@@ -46,6 +46,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
+    // music volume control
+    
+    // match slider to current audio volume
+    musicVolume.value = Math.round(backgroundMusic.volume * 100);
+    musicVolumeValue.textContent = `${musicVolume.value}%`;
+
+    musicVolume.addEventListener('input', () => {
+
+        const volume = Number(musicVolume.value) / 100;
+
+        backgroundMusic.volume = volume;
+
+        // update displayed percentage
+        musicVolumeValue.textContent = `${musicVolume.value}%`;
+
+    });
+
     // screen 1 to screen 2
     startButton.addEventListener('click', () => {
 
