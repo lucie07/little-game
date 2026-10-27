@@ -25,6 +25,27 @@ input {
     min-height: 100dvh;
 }
 
+#game > h1 {
+    position: absolute;
+
+    top: 6%;
+    left: 6%;
+
+    margin: 0;
+    max-width: 800px;
+
+    font-size: clamp(3rem, 7vw, 7rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+
+    color: #f5eee8;
+    text-align: left;
+
+    z-index: 2;
+    pointer-events: none;
+}
+
 #game-world {
     position: relative;
 
