@@ -147,6 +147,34 @@ input {
     transform: translateY(-4px);
 }
 
+/* screen 2 responsive setting mobile layout */
+@media (max-width: 700px) {
+
+    #game-world {
+        grid-template-columns: 1fr;
+    }
+
+    .yarn-stage {
+        grid-column: 1;
+
+        width: 260px;
+        max-width: 60vw;
+    }
+
+    #game > h1 {
+        top: 6%;
+        left: 6%;
+
+        max-width: 88%;
+        font-size: clamp(2.5rem, 10vw, 4rem);
+    }
+
+    .play-button {
+        bottom: 8%;
+        left: 6%;
+    }
+}
+
 /* screen 2 settings */
 
 .settings-button {
