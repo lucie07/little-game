@@ -138,20 +138,13 @@ input {
     position: absolute;
 
     bottom: 10%;
-    left: 50%;
+    left: 6%;
 
-    transform: translateX(-50%);
     z-index: 10;
 }
 
 .play-button:hover {
-    transform: translateX(-50%) translateY(-4px);
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .game-button {
-        transition: none;
-    }
+    transform: translateY(-4px);
 }
 
 /* screen 2 settings */
