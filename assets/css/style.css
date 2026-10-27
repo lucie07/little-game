@@ -27,8 +27,10 @@ input {
 
 #game-world {
     position: relative;
+
     width: 100%;
-    height: 70vh;
+    min-height: 100vh;
+    min-height: 100dvh;
 
     background:
         radial-gradient(
@@ -38,7 +40,6 @@ input {
             #180f0d 100%
         );
 
-    border-radius: 6px;
     overflow: hidden;
 
     display: flex;
