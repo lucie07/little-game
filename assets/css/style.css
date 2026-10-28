@@ -176,7 +176,7 @@ input {
         font-size: clamp(2.5rem, 10vw, 4rem);
     }
 
-    .play-button {
+    .welcome-actions {
         bottom: 8%;
         left: 6%;
     }
