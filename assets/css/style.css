@@ -133,18 +133,25 @@ input {
     outline-offset: 4px;
 }
 
-/* screen 2 */
-.play-button {
+/* screen 2 buttons container */
+
+.welcome-actions {
     position: absolute;
 
     bottom: 10%;
     left: 6%;
 
     z-index: 10;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.play-button:hover {
-    transform: translateY(-4px);
+.welcome-actions .game-button {
+    width: 210px;
+    max-width: 88vw;
+    text-align: center;
 }
 
 /* screen 2 responsive setting mobile layout */
