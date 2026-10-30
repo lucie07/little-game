@@ -338,6 +338,23 @@ input {
     justify-content: center;
 }
 
+.puzzle-board {
+    position: relative;
+
+    width: min(100%, 760px);
+    aspect-ratio: 4 / 3;
+
+    background-image: url("../images/fabric-texture-background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    border-radius: 12px;
+    overflow: hidden;
+
+    box-shadow: 0 12px 32px rgba(70, 50, 35, 0.15);
+}
+
 /* first yarn ball element-3d version */
 /*
 .yarn-wrapper {
