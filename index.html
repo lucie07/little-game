@@ -110,18 +110,46 @@
     <!-- screen 3: gameplay -->
     <main id="gameplay-screen" hidden>
 
-        <!-- layer 1 static cream background -->
-        <div class="gameplay-background" aria-hidden="true"></div>
+    <!-- layer 1 static cream background -->
+    <div class="gameplay-background" aria-hidden="true"></div>
 
-        <!-- gameplay content -->
-        <div class="gameplay-content">
+    <div class="gameplay-content">
 
-            <!-- layer 2 puzzle board -->
-            <div class="puzzle-board">
+        <div class="puzzle-layout">
+
+            <!-- layer 2 fabric board -->
+            <div id="puzzle-board" class="puzzle-board">
+
+                <div
+                    id="constellation-point"
+                    class="constellation-point"
+                    aria-label="Constellation target"
+                >
+                    ✦
+                </div>
 
             </div>
 
+            <button
+                id="puzzle-yarn"
+                class="puzzle-yarn"
+                type="button"
+                aria-label="Drag yarn onto constellation point"
+            >
+                <img
+                    src="assets/images/yarn-ball-2.svg"
+                    alt=""
+                    draggable="false"
+                >
+            </button>
+
+            <p id="puzzle-status" class="puzzle-status" role="status">
+                Drag the yarns
+            </p>
+
         </div>
+
+    </div>
 
     </main>
 
