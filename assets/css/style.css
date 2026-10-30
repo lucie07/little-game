@@ -383,6 +383,48 @@ input {
 
 }
 
+.constellation-point {
+    position: absolute;
+
+    left: 55%;
+    top: 42%;
+
+    transform: translate(-50%, -50%);
+
+    width: 64px;
+    height: 64px;
+
+    display: grid;
+    place-items: center;
+
+    border: 2px dashed #fff9ec;
+    border-radius: 50%;
+
+    background: rgba(255, 249, 236, 0.15);
+    color: #fff9ec;
+
+    font-size: 26px;
+
+    box-shadow: 0 0 16px rgba(255, 249, 236, 0.35);
+
+    pointer-events: none;
+
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.constellation-point.is-near {
+    background: rgba(255, 249, 236, 0.35);
+
+    box-shadow: 0 0 26px rgba(255, 249, 236, 0.9);
+}
+
+.constellation-point.is-matched {
+    border-style: solid;
+    background: rgba(255, 249, 236, 0.25);
+}
+
 /* first yarn ball element-3d version */
 /*
 .yarn-wrapper {
