@@ -338,11 +338,25 @@ input {
     justify-content: center;
 }
 
+.puzzle-layout {
+    position: relative;
+
+    width: min(100%, 1100px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 20px;
+}
+
 .puzzle-board {
     position: relative;
 
-    width: min(100%, 760px);
+    width: min(68%, 760px);
     aspect-ratio: 4 / 3;
+
+    z-index: 1;
 
     background-image: url("../images/fabric-texture-background.png");
     background-size: cover;
