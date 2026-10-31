@@ -11,6 +11,240 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let drag = null;
 
+    // runaway yarn movement
+
+    const puzzleLayout = document.querySelector('.puzzle-layout');
+    const puzzleBoard = document.querySelector('#puzzle-board');
+    const gameplayPanel = document.querySelector('#gameplay-screen');
+
+    const escapeSettings = {
+        minSpeed: 130,
+        maxSpeed: 220,
+        minTurnTime: 700,
+        maxTurnTime: 1500,
+        boardGap: 12
+    };
+
+    const yarnMotion = {
+        running: false,
+        x: 0,
+        y: 0,
+        vx: 0,
+        vy: 0,
+        lastTime: 0,
+        nextTurn: 0,
+        bounds: null
+    };
+
+    function random(min, max) {
+        return min + Math.random() * (max - min);
+    }
+
+    function clamp(value, min, max) {
+        return Math.max(min, Math.min(max, value));
+    }
+
+    // set where the yarn can move
+
+    function getMovementBounds() {
+
+        const layout = puzzleLayout.getBoundingClientRect();
+        const board = puzzleBoard.getBoundingClientRect();
+
+        const yarnWidth = puzzleYarn.offsetWidth;
+        const yarnHeight = puzzleYarn.offsetHeight;
+
+        const maxX = Math.max(0, layout.width - yarnWidth);
+        const maxY = Math.max(0, layout.height - yarnHeight);
+
+        const mobile = window.matchMedia('(max-width: 700px)').matches;
+
+        if (mobile) {
+            const status = puzzleStatus.getBoundingClientRect();
+
+            const minY = Math.min(
+                maxY,
+                status.bottom - layout.top + 12
+            );
+
+            return {
+                minX: 0,
+                maxX,
+                minY,
+                maxY,
+                mobile: true
+            };
+        }
+
+        const leftLimit =
+            board.left - layout.left - yarnWidth - escapeSettings.boardGap;
+
+        const rightStart =
+            board.right - layout.left + escapeSettings.boardGap;
+
+        const verticalLimit = Math.max(
+            0,
+            Math.min(maxY, board.bottom - layout.top - yarnHeight)
+        );
+
+        if (leftLimit >= 0) {
+            return {
+                minX: 0,
+                maxX: leftLimit,
+                minY: 0,
+                maxY: verticalLimit,
+                mobile: false
+            };
+        }
+
+        if (rightStart <= maxX) {
+            return {
+                minX: rightStart,
+                maxX,
+                minY: 0,
+                maxY: verticalLimit,
+                mobile: false
+            };
+        }
+
+        // fallback when not enough space
+        return {
+            minX: 0,
+            maxX,
+            minY: Math.min(maxY, board.bottom - layout.top + 12),
+            maxY,
+            mobile: true
+        };
+    }
+
+    // set a new unpredictable direction
+
+    function changeYarnDirection(time) {
+
+        const speed = random(
+            escapeSettings.minSpeed,
+            escapeSettings.maxSpeed
+        );
+
+        const direction = Math.random() < 0.5 ? -1 : 1;
+
+        if (yarnMotion.bounds.mobile) {
+
+            yarnMotion.vx = speed * direction;
+            yarnMotion.vy = random(-25, 25);
+
+        } else {
+
+            yarnMotion.vx = random(-65, 65);
+            yarnMotion.vy = speed * direction;
+
+        }
+
+        yarnMotion.nextTurn = time + random(
+            escapeSettings.minTurnTime,
+            escapeSettings.maxTurnTime
+        );
+    }
+
+    // animate while yarn is free
+
+    function animateRunawayYarn(time) {
+
+        if (
+            !yarnMotion.running ||
+            puzzleYarn.disabled ||
+            gameplayPanel.hidden
+        ) {
+            yarnMotion.running = false;
+            return;
+        }
+
+        const dt = yarnMotion.lastTime
+            ? Math.min((time - yarnMotion.lastTime) / 1000, 0.05)
+            : 0.016;
+
+        yarnMotion.lastTime = time;
+
+        if (!drag && !puzzleYarn.matches(':focus-visible')) {
+
+            if (time >= yarnMotion.nextTurn) {
+                changeYarnDirection(time);
+            }
+
+            const b = yarnMotion.bounds;
+
+            yarnMotion.x += yarnMotion.vx * dt;
+            yarnMotion.y += yarnMotion.vy * dt;
+
+            if (yarnMotion.x < b.minX || yarnMotion.x > b.maxX) {
+                yarnMotion.x = clamp(yarnMotion.x, b.minX, b.maxX);
+                yarnMotion.vx *= -1;
+            }
+
+            if (yarnMotion.y < b.minY || yarnMotion.y > b.maxY) {
+                yarnMotion.y = clamp(yarnMotion.y, b.minY, b.maxY);
+                yarnMotion.vy *= -1;
+            }
+
+            puzzleYarn.style.left = `${yarnMotion.x}px`;
+            puzzleYarn.style.top = `${yarnMotion.y}px`;
+        }
+
+        requestAnimationFrame(animateRunawayYarn);
+    }
+
+    // begin animation when gameplay opens
+
+    function startRunawayYarn() {
+
+        if (
+            yarnMotion.running ||
+            puzzleYarn.disabled ||
+            !puzzleLayout ||
+            !puzzleBoard ||
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ) return;
+
+        const layout = puzzleLayout.getBoundingClientRect();
+        const yarn = puzzleYarn.getBoundingClientRect();
+
+        yarnMotion.bounds = getMovementBounds();
+
+        const b = yarnMotion.bounds;
+
+        yarnMotion.x = clamp(yarn.left - layout.left, b.minX, b.maxX);
+        yarnMotion.y = clamp(yarn.top - layout.top, b.minY, b.maxY);
+
+        puzzleYarn.style.bottom = 'auto';
+        puzzleYarn.style.left = `${yarnMotion.x}px`;
+        puzzleYarn.style.top = `${yarnMotion.y}px`;
+
+        yarnMotion.running = true;
+        yarnMotion.lastTime = 0;
+        yarnMotion.nextTurn = 0;
+
+        requestAnimationFrame(animateRunawayYarn);
+    }
+
+    document.querySelector('#play-button')?.addEventListener('click', () => {
+        requestAnimationFrame(startRunawayYarn);
+    });
+
+    window.addEventListener('resize', () => {
+
+        if (!yarnMotion.running || drag) return;
+
+        yarnMotion.bounds = getMovementBounds();
+
+        const b = yarnMotion.bounds;
+
+        yarnMotion.x = clamp(yarnMotion.x, b.minX, b.maxX);
+        yarnMotion.y = clamp(yarnMotion.y, b.minY, b.maxY);
+
+        puzzleYarn.style.left = `${yarnMotion.x}px`;
+        puzzleYarn.style.top = `${yarnMotion.y}px`;
+    });
+
         function isNearTarget() {
 
             const yarnRect = puzzleYarn.getBoundingClientRect();
