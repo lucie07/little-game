@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bounds: null
     };
 
-    function random(min, max) {
+    function randomRunaway(min, max) {
         return min + Math.random() * (max - min);
     }
 
