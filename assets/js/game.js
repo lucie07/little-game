@@ -64,8 +64,88 @@ document.addEventListener('DOMContentLoaded', () => {
             constellationPoint.classList.remove('is-near');
         }
 
-    }
+        puzzleYarn.addEventListener('pointerdown', (event) => {
 
+            if (event.pointerType === 'mouse' && event.button !== 0) return;
+            if (puzzleYarn.disabled) return;
+
+            event.preventDefault();
+
+            drag = {
+                pointerId: event.pointerId,
+                startX: event.clientX,
+                startY: event.clientY
+            };
+
+            puzzleYarn.classList.add('is-dragging');
+
+            // keep receiving events while dragging
+            puzzleYarn.setPointerCapture(event.pointerId);
+
+        });
+
+        puzzleYarn.addEventListener('pointermove', (event) => {
+
+            if (!drag || event.pointerId !== drag.pointerId) return;
+
+            const dx = event.clientX - drag.startX;
+            const dy = event.clientY - drag.startY;
+
+            // move yarn with mouse or finger
+            puzzleYarn.style.transform =
+                `translate3d(${dx}px, ${dy}px, 0)`;
+
+            constellationPoint.classList.toggle(
+                'is-near',
+                isNearTarget()
+            );
+
+        });
+
+        puzzleYarn.addEventListener('pointerup', (event) => {
+
+            if (!drag || event.pointerId !== drag.pointerId) return;
+
+            const matched = isNearTarget();
+
+            if (puzzleYarn.hasPointerCapture(event.pointerId)) {
+                puzzleYarn.releasePointerCapture(event.pointerId);
+            }
+
+            drag = null;
+
+            if (matched) {
+
+                matchYarn();
+
+            } else {
+
+                resetYarn();
+
+            }
+
+        });
+
+        puzzleYarn.addEventListener('pointercancel', (event) => {
+
+            if (!drag || event.pointerId !== drag.pointerId) return;
+
+            drag = null;
+            resetYarn();
+
+        });
+
+        // keyboard alternative to place the single yarn
+        puzzleYarn.addEventListener('keydown', (event) => {
+
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                matchYarn();
+            }
+
+        });
+
+    }
 
     const yarn = document.querySelector('.yarn-stage');
     const gameWorld = document.querySelector('#game-world');
