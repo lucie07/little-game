@@ -1,6 +1,72 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // screen 3: constellation puzzle
+
+    const puzzleYarn = document.querySelector('#puzzle-yarn');
+    const constellationPoint = document.querySelector('#constellation-point');
+    const puzzleStatus = document.querySelector('#puzzle-status');
+
+    if (puzzleYarn && constellationPoint && puzzleStatus) {
+
+        let drag = null;
+
+        function isNearTarget() {
+
+            const yarnRect = puzzleYarn.getBoundingClientRect();
+            const pointRect = constellationPoint.getBoundingClientRect();
+
+            const yarnX = yarnRect.left + yarnRect.width / 2;
+            const yarnY = yarnRect.top + yarnRect.height / 2;
+
+            const pointX = pointRect.left + pointRect.width / 2;
+            const pointY = pointRect.top + pointRect.height / 2;
+
+            const distance = Math.hypot(
+                yarnX - pointX,
+                yarnY - pointY
+            );
+
+            const tolerance = (yarnRect.width + pointRect.width) * 0.4;
+
+            return distance <= tolerance;
+        }
+
+
+        function matchYarn() {
+
+            if (puzzleYarn.classList.contains('is-matched')) return;
+
+            drag = null;
+            puzzleYarn.classList.remove('is-dragging');
+            puzzleYarn.style.transform = '';
+
+            constellationPoint.appendChild(puzzleYarn);
+
+            // apply matched styles
+            puzzleYarn.classList.add('is-matched');
+
+            constellationPoint.classList.remove('is-near');
+            constellationPoint.classList.add('is-matched');
+
+            puzzleYarn.disabled = true;
+
+            puzzleStatus.textContent = 'Matched! The yarn has found its star.';
+        }
+
+
+        // return unmatched yarn to starting position
+        function resetYarn() {
+
+            puzzleYarn.classList.remove('is-dragging');
+            puzzleYarn.style.transform = '';
+
+            constellationPoint.classList.remove('is-near');
+        }
+
+    }
+
+
     const yarn = document.querySelector('.yarn-stage');
     const gameWorld = document.querySelector('#game-world');
 
