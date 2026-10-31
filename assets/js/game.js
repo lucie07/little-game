@@ -275,6 +275,13 @@ document.addEventListener('DOMContentLoaded', () => {
             puzzleYarn.classList.remove('is-dragging');
             puzzleYarn.style.transform = '';
 
+            yarnMotion.running = false;
+
+            // slear automatic positioning
+            puzzleYarn.style.left = '';
+            puzzleYarn.style.top = '';
+            puzzleYarn.style.bottom = '';
+
             constellationPoint.appendChild(puzzleYarn);
 
             // apply matched styles
