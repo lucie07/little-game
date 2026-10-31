@@ -295,7 +295,6 @@ document.addEventListener('DOMContentLoaded', () => {
             puzzleStatus.textContent = 'Matched! The yarn has found its star.';
         }
 
-
         // return unmatched yarn to starting position
         function resetYarn() {
 
@@ -303,6 +302,9 @@ document.addEventListener('DOMContentLoaded', () => {
             puzzleYarn.style.transform = '';
 
             constellationPoint.classList.remove('is-near');
+
+            // pick a fresh direction when movement resumes
+            yarnMotion.nextTurn = 0;
         }
 
         puzzleYarn.addEventListener('pointerdown', (event) => {
