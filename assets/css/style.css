@@ -110,7 +110,7 @@ input {
     color: #3c2921;
 
     border: none;
-    border-radius: 50px;
+    border-radius: 0px;
 
     font-size: 1.2rem;
     font-weight: 600;
@@ -213,7 +213,7 @@ input {
     color: #3c2921;
 
     border: none;
-    border-radius: 16px;
+    border-radius: 0px;
 
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
 }
@@ -363,7 +363,7 @@ input {
     background-position: center;
     background-repeat: no-repeat;
 
-    border-radius: 12px;
+    border-radius: 0px;
     overflow: hidden;
 
     box-shadow: 0 12px 32px rgba(70, 50, 35, 0.15);
@@ -378,7 +378,7 @@ input {
     .puzzle-board {
         width: 100%;
         aspect-ratio: 4 / 5;
-        border-radius: 8px;
+        border-radius: 0px;
     }
 
 }
@@ -398,7 +398,7 @@ input {
     place-items: center;
 
     border: 2px dashed #fff9ec;
-    border-radius: 50%;
+    border-radius: 0px;
 
     background: rgba(255, 249, 236, 0.15);
     color: #fff9ec;
