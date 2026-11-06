@@ -107,50 +107,33 @@
 
     </main>
 
-    <!-- screen 3: gameplay -->
+    <!-- screen 3: gameplay, three yarn constellation puzzle -->
     <main id="gameplay-screen" hidden>
+        <!-- layer 1 static cream background -->
+        <div class="gameplay-background" aria-hidden="true"></div>
+        <div class="gameplay-content">
+            <h2 id="gameplay-heading" class="sr-only" tabindex="-1">Constellation puzzle</h2>
 
-    <!-- layer 1 static cream background -->
-    <div class="gameplay-background" aria-hidden="true"></div>
-
-    <div class="gameplay-content">
-
-        <div class="puzzle-layout">
-
-            <!-- layer 2 fabric board -->
-            <div id="puzzle-board" class="puzzle-board">
-
-                <div
-                    id="constellation-point"
-                    class="constellation-point"
-                    aria-label="Constellation target"
-                >
-                    ✦
+            <div class="puzzle-layout">
+                <!-- layer 2 fabric board -->
+                <div id="puzzle-board" class="puzzle-board">
+                    <div class="constellation-point" data-target="dark" aria-hidden="true">
+                        <span class="target-star">✦</span>
+                    </div>
+                    <div class="constellation-point" data-target="medium" aria-hidden="true">
+                        <span class="target-star">✦</span>
+                    </div>
+                    <div class="constellation-point" data-target="light" aria-hidden="true">
+                        <span class="target-star">✦</span>
+                    </div>
                 </div>
 
+                <p id="puzzle-status" class="puzzle-status" role="status">
+                    Catch and drag...
+                </p>
+
             </div>
-
-            <button
-                id="puzzle-yarn"
-                class="puzzle-yarn"
-                type="button"
-                aria-label="Drag yarn onto constellation point"
-            >
-                <img
-                    src="assets/images/yarn-ball-2.svg"
-                    alt=""
-                    draggable="false"
-                >
-            </button>
-
-            <p id="puzzle-status" class="puzzle-status" role="status">
-                Drag the yarns
-            </p>
-
         </div>
-
-    </div>
-
     </main>
 
     <!-- background music -->
