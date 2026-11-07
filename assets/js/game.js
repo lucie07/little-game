@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // gameplay sound effects
 
-    const yarnPickupSound = new Audio('assets/audio/ui-sound-effect-bubble-pop.mp3');
     const yarnMatchSound = new Audio('assets/audio/ui-sound-effect-small-hit.wav');
 
     // preload audio files
@@ -32,15 +31,61 @@ document.addEventListener('DOMContentLoaded', () => {
     yarnPickupSound.volume = 0.65;
     yarnMatchSound.volume = 0.8;
 
-    function playPuzzleSound(sound) {
+    // gameplay sound effects
+    const puzzleSounds = {
+        pickup: {
+            url: 'assets/audio/ui-sound-effect-bubble-pop.mp3',
+            volume: 0.65,
+            buffer: null,
+            activeSource: null
+        },
+        match: {
+            url: 'assets/audio/ui-sound-effect-small-hit.wav',
+            volume: 0.8,
+            buffer: null,
+            activeSource: null
+        }
+    };
 
-        sound.pause();
-        sound.currentTime = 0;
+    // play a short sound effect
+    function playPuzzleSound(type) {
+        const sound = puzzleSounds[type];
 
-        sound.play().catch(error => {
-            console.warn('Puzzle sound could not play:', error);
-        });
+        if (!audioContext || !sound?.buffer) return;
 
+        if (audioContext.state === 'suspended') {
+            audioContext.resume().catch(error => {
+                console.warn('Puzzle audio could not resume:', error);
+            });
+        }
+
+        if (sound.activeSource) {
+            sound.activeSource.stop();
+        }
+
+        // create a new playback instance
+        const source = audioContext.createBufferSource();
+        const gain = audioContext.createGain();
+
+        source.buffer = sound.buffer;
+        gain.gain.value = sound.volume;
+
+        source.connect(gain);
+        gain.connect(audioContext.destination);
+
+        sound.activeSource = source;
+
+        // clean up after playback
+        source.onended = () => {
+            if (sound.activeSource === source) {
+                sound.activeSource = null;
+            }
+
+            source.disconnect();
+            gain.disconnect();
+        };
+
+        source.start();
     }
 
     if (puzzleLayout && puzzleBoard && puzzlePlayfield && puzzleStatus && gameplayPanel) {
