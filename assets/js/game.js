@@ -272,6 +272,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function matchYarn(state) {
             if (state.matched) return;
+
+            // play small hit sound on successful match
+            playPuzzleSound(yarnMatchSound);         
+
             state.dragging = false;
             state.matched = true;
             state.element.classList.remove('is-dragging');
