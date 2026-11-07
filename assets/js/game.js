@@ -385,7 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 event.preventDefault();
 
                 // play bubble pop sound when yarn is caught
-                playPuzzleSound(yarnPickupSound);
+                playPuzzleSound('pickup');
 
                 state.dragging = true;
 
