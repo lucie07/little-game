@@ -280,6 +280,60 @@ document.addEventListener('DOMContentLoaded', () => {
             state.nextTarget = 0;
         }
 
+        // shared pointer listeners: the state tells which yarn is being moved
+        for (const state of yarns) {
+            const element = state.element;
+
+            element.addEventListener('pointerdown', (event) => {
+                if (event.pointerType === 'mouse' && event.button !== 0) return;
+                if (state.matched || activeDrag) return;
+                event.preventDefault();
+                state.dragging = true;
+                activeDrag = {
+                    state, pointerId: event.pointerId,
+                    startX: event.clientX, startY: event.clientY
+                };
+                element.classList.add('is-dragging');
+                element.setPointerCapture(event.pointerId);
+            });
+
+            element.addEventListener('pointermove', (event) => {
+                if (!activeDrag || activeDrag.state !== state ||
+                    event.pointerId !== activeDrag.pointerId) return;
+                const dx = event.clientX - activeDrag.startX;
+                const dy = event.clientY - activeDrag.startY;
+                element.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+                state.target.classList.toggle('is-near', nearAssignedTarget(state));
+            });
+
+            element.addEventListener('pointerup', (event) => {
+                if (!activeDrag || activeDrag.state !== state ||
+                    event.pointerId !== activeDrag.pointerId) return;
+                const matched = nearAssignedTarget(state);
+                if (element.hasPointerCapture(event.pointerId)) {
+                    element.releasePointerCapture(event.pointerId);
+                }
+                activeDrag = null;
+                if (matched) matchYarn(state);
+                else resetUnmatchedYarn(state);
+            });
+
+            element.addEventListener('pointercancel', (event) => {
+                if (!activeDrag || activeDrag.state !== state ||
+                    event.pointerId !== activeDrag.pointerId) return;
+                activeDrag = null;
+                resetUnmatchedYarn(state);
+            });
+
+            // keyboard alternative: focus a yarn and press Enter/Space to match
+            element.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    matchYarn(state);
+                }
+            });
+        }
+
         reducedMotion.addEventListener?.('change', () => {
             if (!puzzleStarted || gameplayPanel.hidden || matchCount === yarns.length) return;
             if (reducedMotion.matches && puzzleFrameId !== null) {
