@@ -125,7 +125,7 @@ input {
 
 .game-button:hover {
     background: #f5d8b8;
-    transform: translateY(-4px);
+    /* transform: translateY(-4px); */
 }
 
 .game-button:focus-visible {
