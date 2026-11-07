@@ -1,393 +1,118 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // screen 3: constellation puzzle
-
-    const puzzleYarn = document.querySelector('#puzzle-yarn');
-    const constellationPoint = document.querySelector('#constellation-point');
-    const puzzleStatus = document.querySelector('#puzzle-status');
-
-    if (puzzleYarn && constellationPoint && puzzleStatus) {
-
-        let drag = null;
-
-    // runaway yarn movement
+    // screen 3: three independent yarns and one reusable puzzle engine
 
     const puzzleLayout = document.querySelector('.puzzle-layout');
     const puzzleBoard = document.querySelector('#puzzle-board');
+    const puzzlePlayfield = document.querySelector('#yarn-playfield');
+    const puzzleStatus = document.querySelector('#puzzle-status');
     const gameplayPanel = document.querySelector('#gameplay-screen');
 
-    const escapeSettings = {
-        minSpeed: 130,
-        maxSpeed: 220,
-        minTurnTime: 700,
-        maxTurnTime: 1500,
-        boardGap: 12
+    const yarnConfigs = {
+        dark:   { personality: 'bouncer',  zone: 'left-top' },
+        medium: { personality: 'dasher',   zone: 'right' },
+        light:  { personality: 'wanderer', zone: 'left-bottom' }
     };
 
-    const yarnMotion = {
-        running: false,
-        x: 0,
-        y: 0,
-        vx: 0,
-        vy: 0,
-        lastTime: 0,
-        nextTurn: 0,
-        bounds: null
-    };
+    const randomRange = (min, max) => min + Math.random() * (max - min);
+    const clampValue = (value, min, max) => Math.max(min, Math.min(max, value));
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-    function randomRunaway(min, max) {
-        return min + Math.random() * (max - min);
-    }
+    if (puzzleLayout && puzzleBoard && puzzlePlayfield && puzzleStatus && gameplayPanel) {
+        const yarns = [...puzzlePlayfield.querySelectorAll('.puzzle-yarn[data-yarn]')]
+            .map((element) => {
+                const id = element.dataset.yarn;
+                const config = yarnConfigs[id];
+                const target = puzzleBoard.querySelector(`[data-target="${id}"]`);
+                if (!config || !target) return null;
+                return {
+                    id, element, target, config,
+                    x: 0, y: 0, vx: 0, vy: 0,
+                    bounds: null, matched: false, dragging: false,
+                    nextTurn: 0, nextAction: 0, dashPhase: 'paused',
+                    nextTarget: 0, targetX: 0, targetY: 0,
+                    phase: randomRange(0, Math.PI * 2)
+                };
+            })
+            .filter(Boolean);
 
-    function clamp(value, min, max) {
-        return Math.max(min, Math.min(max, value));
-    }
+        let puzzleStarted = false;
+        let puzzleFrameId = null;
+        let lastFrameTime = 0;
+        let activeDrag = null;
+        let matchCount = 0;
 
-    // set where the yarn can move
+        // desktop: dark/light yarns have separate left side areas, medium on right
+        // mobile: each yarn has its own horizontal lane below the fabric board
+        function movementBounds(state) {
+            const field = puzzlePlayfield.getBoundingClientRect();
+            const board = puzzleBoard.getBoundingClientRect();
+            const sizeX = state.element.offsetWidth;
+            const sizeY = state.element.offsetHeight;
+            const maxX = Math.max(0, field.width - sizeX);
+            const maxY = Math.max(0, field.height - sizeY);
 
-    function getMovementBounds() {
+            if (window.matchMedia('(max-width: 820px)').matches) {
+                const laneIndex = { dark: 0, medium: 1, light: 2 }[state.id];
+                const laneHeight = field.height / 3;
+                const minY = Math.min(maxY, laneHeight * laneIndex + 8);
+                const laneEnd = Math.min(maxY, laneHeight * (laneIndex + 1) - sizeY - 8);
+                return {
+                    minX: 0, maxX,
+                    minY, maxY: Math.max(minY, laneEnd),
+                    mobile: true
+                };
+            }
 
-        const layout = puzzleLayout.getBoundingClientRect();
-        const board = puzzleBoard.getBoundingClientRect();
+            const gap = 14;
+            const leftMax = board.left - field.left - sizeX - gap;
+            const rightMin = board.right - field.left + gap;
+            const boardTop = Math.max(0, board.top - field.top);
+            const boardBottom = Math.min(maxY, board.bottom - field.top - sizeY);
+            const heightRange = Math.max(0, boardBottom - boardTop);
 
-        const yarnWidth = puzzleYarn.offsetWidth;
-        const yarnHeight = puzzleYarn.offsetHeight;
+            // if the available space collapses in an unusual layout, stay onscreen
+            if (leftMax < 0 || rightMin > maxX) {
+                return { minX: 0, maxX, minY: 0, maxY, mobile: true };
+            }
 
-        const maxX = Math.max(0, layout.width - yarnWidth);
-        const maxY = Math.max(0, layout.height - yarnHeight);
+            if (state.config.zone === 'right') {
+                return {
+                    minX: rightMin, maxX,
+                    minY: boardTop, maxY: Math.max(boardTop, boardBottom),
+                    mobile: false
+                };
+            }
 
-        const mobile = window.matchMedia('(max-width: 700px)').matches;
-
-        if (mobile) {
-            const status = puzzleStatus.getBoundingClientRect();
-
-            const minY = Math.min(
-                maxY,
-                status.bottom - layout.top + 12
-            );
-
+            const onTop = state.config.zone === 'left-top';
+            const minY = onTop ? boardTop : boardTop + heightRange * 0.57;
+            const topY = onTop ? boardTop + heightRange * 0.43 : boardBottom;
             return {
-                minX: 0,
-                maxX,
-                minY,
-                maxY,
-                mobile: true
-            };
-        }
-
-        const leftLimit =
-            board.left - layout.left - yarnWidth - escapeSettings.boardGap;
-
-        const rightStart =
-            board.right - layout.left + escapeSettings.boardGap;
-
-        const verticalLimit = Math.max(
-            0,
-            Math.min(maxY, board.bottom - layout.top - yarnHeight)
-        );
-
-        if (leftLimit >= 0) {
-            return {
-                minX: 0,
-                maxX: leftLimit,
-                minY: 0,
-                maxY: verticalLimit,
+                minX: 0, maxX: Math.max(0, leftMax),
+                minY, maxY: Math.max(minY, topY),
                 mobile: false
             };
         }
 
-        if (rightStart <= maxX) {
-            return {
-                minX: rightStart,
-                maxX,
-                minY: 0,
-                maxY: verticalLimit,
-                mobile: false
-            };
+        function paintYarn(state) {
+            state.element.style.left = `${state.x}px`;
+            state.element.style.top = `${state.y}px`;
         }
 
-        // fallback when not enough space
-        return {
-            minX: 0,
-            maxX,
-            minY: Math.min(maxY, board.bottom - layout.top + 12),
-            maxY,
-            mobile: true
-        };
-    }
-
-    // set a new unpredictable direction
-
-    function changeYarnDirection(time) {
-
-        const speed = random(
-            escapeSettings.minSpeed,
-            escapeSettings.maxSpeed
-        );
-
-        const direction = Math.random() < 0.5 ? -1 : 1;
-
-        if (yarnMotion.bounds.mobile) {
-
-            yarnMotion.vx = speed * direction;
-            yarnMotion.vy = random(-25, 25);
-
-        } else {
-
-            yarnMotion.vx = random(-65, 65);
-            yarnMotion.vy = speed * direction;
-
-        }
-
-        yarnMotion.nextTurn = time + random(
-            escapeSettings.minTurnTime,
-            escapeSettings.maxTurnTime
-        );
-    }
-
-    // animate while yarn is free
-
-    function animateRunawayYarn(time) {
-
-        if (
-            !yarnMotion.running ||
-            puzzleYarn.disabled ||
-            gameplayPanel.hidden
-        ) {
-            yarnMotion.running = false;
-            return;
-        }
-
-        const dt = yarnMotion.lastTime
-            ? Math.min((time - yarnMotion.lastTime) / 1000, 0.05)
-            : 0.016;
-
-        yarnMotion.lastTime = time;
-
-        if (!drag && !puzzleYarn.matches(':focus-visible')) {
-
-            if (time >= yarnMotion.nextTurn) {
-                changeYarnDirection(time);
+        function bounceAtEdges(state) {
+            const b = state.bounds;
+            if (state.x < b.minX || state.x > b.maxX) {
+                state.x = clampValue(state.x, b.minX, b.maxX);
+                state.vx *= -1;
             }
-
-            const b = yarnMotion.bounds;
-
-            yarnMotion.x += yarnMotion.vx * dt;
-            yarnMotion.y += yarnMotion.vy * dt;
-
-            if (yarnMotion.x < b.minX || yarnMotion.x > b.maxX) {
-                yarnMotion.x = clamp(yarnMotion.x, b.minX, b.maxX);
-                yarnMotion.vx *= -1;
+            if (state.y < b.minY || state.y > b.maxY) {
+                state.y = clampValue(state.y, b.minY, b.maxY);
+                state.vy *= -1;
             }
-
-            if (yarnMotion.y < b.minY || yarnMotion.y > b.maxY) {
-                yarnMotion.y = clamp(yarnMotion.y, b.minY, b.maxY);
-                yarnMotion.vy *= -1;
-            }
-
-            puzzleYarn.style.left = `${yarnMotion.x}px`;
-            puzzleYarn.style.top = `${yarnMotion.y}px`;
         }
 
-        requestAnimationFrame(animateRunawayYarn);
-    }
-
-    // begin animation when gameplay opens
-
-    function startRunawayYarn() {
-
-        if (
-            yarnMotion.running ||
-            puzzleYarn.disabled ||
-            !puzzleLayout ||
-            !puzzleBoard ||
-            window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        ) return;
-
-        const layout = puzzleLayout.getBoundingClientRect();
-        const yarn = puzzleYarn.getBoundingClientRect();
-
-        yarnMotion.bounds = getMovementBounds();
-
-        const b = yarnMotion.bounds;
-
-        yarnMotion.x = clamp(yarn.left - layout.left, b.minX, b.maxX);
-        yarnMotion.y = clamp(yarn.top - layout.top, b.minY, b.maxY);
-
-        puzzleYarn.style.bottom = 'auto';
-        puzzleYarn.style.left = `${yarnMotion.x}px`;
-        puzzleYarn.style.top = `${yarnMotion.y}px`;
-
-        yarnMotion.running = true;
-        yarnMotion.lastTime = 0;
-        yarnMotion.nextTurn = 0;
-
-        requestAnimationFrame(animateRunawayYarn);
-    }
-
-    document.querySelector('#play-button')?.addEventListener('click', () => {
-        requestAnimationFrame(startRunawayYarn);
-    });
-
-    window.addEventListener('resize', () => {
-
-        if (!yarnMotion.running || drag) return;
-
-        yarnMotion.bounds = getMovementBounds();
-
-        const b = yarnMotion.bounds;
-
-        yarnMotion.x = clamp(yarnMotion.x, b.minX, b.maxX);
-        yarnMotion.y = clamp(yarnMotion.y, b.minY, b.maxY);
-
-        puzzleYarn.style.left = `${yarnMotion.x}px`;
-        puzzleYarn.style.top = `${yarnMotion.y}px`;
-    });
-
-        function isNearTarget() {
-
-            const yarnRect = puzzleYarn.getBoundingClientRect();
-            const pointRect = constellationPoint.getBoundingClientRect();
-
-            const yarnX = yarnRect.left + yarnRect.width / 2;
-            const yarnY = yarnRect.top + yarnRect.height / 2;
-
-            const pointX = pointRect.left + pointRect.width / 2;
-            const pointY = pointRect.top + pointRect.height / 2;
-
-            const distance = Math.hypot(
-                yarnX - pointX,
-                yarnY - pointY
-            );
-
-            const tolerance = (yarnRect.width + pointRect.width) * 0.4;
-
-            return distance <= tolerance;
-        }
-
-
-        function matchYarn() {
-
-            if (puzzleYarn.classList.contains('is-matched')) return;
-
-            drag = null;
-            puzzleYarn.classList.remove('is-dragging');
-            puzzleYarn.style.transform = '';
-
-            yarnMotion.running = false;
-
-            // slear automatic positioning
-            puzzleYarn.style.left = '';
-            puzzleYarn.style.top = '';
-            puzzleYarn.style.bottom = '';
-
-            constellationPoint.appendChild(puzzleYarn);
-
-            // apply matched styles
-            puzzleYarn.classList.add('is-matched');
-
-            constellationPoint.classList.remove('is-near');
-            constellationPoint.classList.add('is-matched');
-
-            puzzleYarn.disabled = true;
-
-            puzzleStatus.textContent = 'Matched! The yarn has found its star.';
-        }
-
-        // return unmatched yarn to starting position
-        function resetYarn() {
-
-            puzzleYarn.classList.remove('is-dragging');
-            puzzleYarn.style.transform = '';
-
-            constellationPoint.classList.remove('is-near');
-
-            // pick a fresh direction when movement resumes
-            yarnMotion.nextTurn = 0;
-        }
-
-        puzzleYarn.addEventListener('pointerdown', (event) => {
-
-            if (event.pointerType === 'mouse' && event.button !== 0) return;
-            if (puzzleYarn.disabled) return;
-
-            event.preventDefault();
-
-            drag = {
-                pointerId: event.pointerId,
-                startX: event.clientX,
-                startY: event.clientY
-            };
-
-            puzzleYarn.classList.add('is-dragging');
-
-            // keep receiving events while dragging
-            puzzleYarn.setPointerCapture(event.pointerId);
-
-        });
-
-        puzzleYarn.addEventListener('pointermove', (event) => {
-
-            if (!drag || event.pointerId !== drag.pointerId) return;
-
-            const dx = event.clientX - drag.startX;
-            const dy = event.clientY - drag.startY;
-
-            // move yarn with mouse or finger
-            puzzleYarn.style.transform =
-                `translate3d(${dx}px, ${dy}px, 0)`;
-
-            constellationPoint.classList.toggle(
-                'is-near',
-                isNearTarget()
-            );
-
-        });
-
-        puzzleYarn.addEventListener('pointerup', (event) => {
-
-            if (!drag || event.pointerId !== drag.pointerId) return;
-
-            const matched = isNearTarget();
-
-            if (puzzleYarn.hasPointerCapture(event.pointerId)) {
-                puzzleYarn.releasePointerCapture(event.pointerId);
-            }
-
-            drag = null;
-
-            if (matched) {
-
-                matchYarn();
-
-            } else {
-
-                resetYarn();
-
-            }
-
-        });
-
-        puzzleYarn.addEventListener('pointercancel', (event) => {
-
-            if (!drag || event.pointerId !== drag.pointerId) return;
-
-            drag = null;
-            resetYarn();
-
-        });
-
-        // keyboard alternative to place the single yarn
-        puzzleYarn.addEventListener('keydown', (event) => {
-
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                matchYarn();
-            }
-
-        });
-
+ 
     }
 
     const yarn = document.querySelector('.yarn-stage');
