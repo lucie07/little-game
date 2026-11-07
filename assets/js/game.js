@@ -47,6 +47,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // load and decode the sounds once
+    async function loadPuzzleSounds() {
+        if (!audioContext) return;
+
+        await Promise.all(Object.values(puzzleSounds).map(async (sound) => {
+            try {
+                const response = await fetch(sound.url);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const audioData = await response.arrayBuffer();
+
+                sound.buffer = await audioContext.decodeAudioData(audioData);
+
+            } catch (error) {
+                console.warn(`Could not load ${sound.url}:`, error);
+            }
+        }));
+    }
+
     // play a short sound effect
     function playPuzzleSound(type) {
         const sound = puzzleSounds[type];
