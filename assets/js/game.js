@@ -19,6 +19,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const clampValue = (value, min, max) => Math.max(min, Math.min(max, value));
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+    // gameplay sound effects
+
+    const yarnPickupSound = new Audio('assets/audio/ui-sound-effect-bubble-pop.mp3');
+    const yarnMatchSound = new Audio('assets/audio/ui-sound-effect-small-hit.wav');
+
+    // preload audio files
+    yarnPickupSound.preload = 'auto';
+    yarnMatchSound.preload = 'auto';
+
+    function playPuzzleSound(sound) {
+
+        sound.pause();
+        sound.currentTime = 0;
+
+        sound.play().catch(error => {
+            console.warn('Puzzle sound could not play:', error);
+        });
+
+    }
+
     if (puzzleLayout && puzzleBoard && puzzlePlayfield && puzzleStatus && gameplayPanel) {
         const yarns = [...puzzlePlayfield.querySelectorAll('.puzzle-yarn[data-yarn]')]
             .map((element) => {
