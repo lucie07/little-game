@@ -341,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (state.matched) return;
 
             // play small hit sound on successful match
-            playPuzzleSound(yarnMatchSound);         
+            playPuzzleSound('match');        
 
             state.dragging = false;
             state.matched = true;
