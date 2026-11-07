@@ -181,6 +181,115 @@ document.addEventListener('DOMContentLoaded', () => {
             wanderer: moveWanderer
         };
 
+        // one shared requestAnimationFrame loop for the three puzzle yarns
+        function animatePuzzle(time) {
+            puzzleFrameId = null;
+            if (gameplayPanel.hidden || reducedMotion.matches || matchCount === yarns.length) {
+                lastFrameTime = 0;
+                return;
+            }
+            const dt = lastFrameTime
+                ? Math.min((time - lastFrameTime) / 1000, 0.05)
+                : 0.016;
+            lastFrameTime = time;
+
+            for (const state of yarns) {
+                if (state.matched || state.dragging || state.element.matches(':focus-visible')) continue;
+                movementFunctions[state.config.personality](state, dt, time);
+                paintYarn(state);
+            }
+            puzzleFrameId = requestAnimationFrame(animatePuzzle);
+        }
+
+        function startPuzzle() {
+            if (puzzleStarted || !yarns.length) return;
+            puzzleStarted = true;
+            for (const state of yarns) {
+                state.bounds = movementBounds(state);
+                const b = state.bounds;
+                state.x = randomRange(b.minX, b.maxX);
+                state.y = randomRange(b.minY, b.maxY);
+                state.targetX = state.x;
+                state.targetY = state.y;
+                paintYarn(state);
+            }
+            puzzleStatus.textContent = `0 of ${yarns.length} yarns matched. Catch each yarn and drag it to its star.`;
+            if (!reducedMotion.matches) {
+                puzzleFrameId = requestAnimationFrame(animatePuzzle);
+            }
+        }
+
+        // runs after the existing Play handler has revealed screen 3
+        document.querySelector('#play-button')?.addEventListener('click', () => {
+            requestAnimationFrame(startPuzzle);
+        });
+
+        window.addEventListener('resize', () => {
+            if (!puzzleStarted) return;
+            for (const state of yarns) {
+                if (state.matched) continue;
+                state.bounds = movementBounds(state);
+                if (state.dragging) continue;
+                state.x = clampValue(state.x, state.bounds.minX, state.bounds.maxX);
+                state.y = clampValue(state.y, state.bounds.minY, state.bounds.maxY);
+                paintYarn(state);
+            }
+        });
+
+        function nearAssignedTarget(state) {
+            const yarn = state.element.getBoundingClientRect();
+            const point = state.target.getBoundingClientRect();
+            const distance = Math.hypot(
+                yarn.left + yarn.width / 2 - point.left - point.width / 2,
+                yarn.top + yarn.height / 2 - point.top - point.height / 2
+            );
+            return distance <= (yarn.width + point.width) * 0.4;
+        }
+
+        function matchYarn(state) {
+            if (state.matched) return;
+            state.dragging = false;
+            state.matched = true;
+            state.element.classList.remove('is-dragging');
+            state.element.style.transform = '';
+            state.element.style.left = '';
+            state.element.style.top = '';
+            state.target.classList.remove('is-near');
+            state.target.classList.add('is-matched');
+            state.target.appendChild(state.element);
+            state.element.classList.add('is-matched');
+            state.element.disabled = true;
+            matchCount++;
+
+            puzzleStatus.textContent = matchCount === yarns.length
+                ? 'All three stars found! The constellation is complete.'
+                : `${matchCount} of ${yarns.length} yarns matched. Keep catching!`;
+            if (matchCount === yarns.length && puzzleFrameId !== null) {
+                cancelAnimationFrame(puzzleFrameId);
+                puzzleFrameId = null;
+            }
+        }
+
+        function resetUnmatchedYarn(state) {
+            state.dragging = false;
+            state.element.classList.remove('is-dragging');
+            state.element.style.transform = '';
+            state.target.classList.remove('is-near');
+            state.nextTurn = 0;
+            state.nextAction = 0;
+            state.nextTarget = 0;
+        }
+
+        reducedMotion.addEventListener?.('change', () => {
+            if (!puzzleStarted || gameplayPanel.hidden || matchCount === yarns.length) return;
+            if (reducedMotion.matches && puzzleFrameId !== null) {
+                cancelAnimationFrame(puzzleFrameId);
+                puzzleFrameId = null;
+                lastFrameTime = 0;
+            } else if (!reducedMotion.matches && puzzleFrameId === null) {
+                puzzleFrameId = requestAnimationFrame(animatePuzzle);
+            }
+        });
     }
 
     const yarn = document.querySelector('.yarn-stage');
