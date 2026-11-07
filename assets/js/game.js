@@ -28,6 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
     yarnPickupSound.preload = 'auto';
     yarnMatchSound.preload = 'auto';
 
+    // sound effect volumes
+    yarnPickupSound.volume = 0.65;
+    yarnMatchSound.volume = 0.8;
+
     function playPuzzleSound(sound) {
 
         sound.pause();
