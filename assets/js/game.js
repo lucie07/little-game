@@ -500,6 +500,9 @@ document.addEventListener('DOMContentLoaded', () => {
             audioContext = context;
             musicGain = gain;
 
+            // preload gameplay sound effects
+            loadPuzzleSounds();
+
         } catch (error) {
             console.warn('Web Audio setup failed:', error);
         }
