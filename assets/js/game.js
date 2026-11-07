@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let audioContext = null;
     let musicGain = null;
-    let musicLevel = 0.35;
+    let musicLevel = 0.15;
 
     // initial volume - fallback for standard HTML audio
     if (backgroundMusic) {
