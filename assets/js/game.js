@@ -312,11 +312,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (event.pointerType === 'mouse' && event.button !== 0) return;
                 if (state.matched || activeDrag) return;
                 event.preventDefault();
+
+                // play bubble pop sound when yarn is caught
+                playPuzzleSound(yarnPickupSound);
+
                 state.dragging = true;
+
                 activeDrag = {
                     state, pointerId: event.pointerId,
                     startX: event.clientX, startY: event.clientY
                 };
+
                 element.classList.add('is-dragging');
                 element.setPointerCapture(event.pointerId);
             });
