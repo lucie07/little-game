@@ -112,7 +112,75 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
- 
+        // movement 1 BOUNCER: perpetual rebounds with occasional changes in direction
+        function moveBouncer(state, dt, time) {
+            if (time >= state.nextTurn) {
+                if (state.bounds.mobile) {
+                    state.vx = randomRange(140, 205) * (Math.random() < .5 ? -1 : 1);
+                    state.vy = randomRange(-38, 38);
+                } else {
+                    state.vx = randomRange(55, 110) * (Math.random() < .5 ? -1 : 1);
+                    state.vy = randomRange(135, 195) * (Math.random() < .5 ? -1 : 1);
+                }
+                state.nextTurn = time + randomRange(900, 1750);
+            }
+            state.x += state.vx * dt;
+            state.y += state.vy * dt;
+            bounceAtEdges(state);
+        }
+
+        // movement 2 DASHER: quick bursts, interrupted by short, unpredictable pauses
+        function moveDasher(state, dt, time) {
+            if (time >= state.nextAction) {
+                if (state.dashPhase === 'paused') {
+                    state.dashPhase = 'dashing';
+                    const direction = Math.random() < .5 ? -1 : 1;
+                    if (state.bounds.mobile) {
+                        state.vx = randomRange(220, 320) * direction;
+                        state.vy = randomRange(-32, 32);
+                    } else {
+                        state.vx = randomRange(-90, 90);
+                        state.vy = randomRange(210, 295) * direction;
+                    }
+                    state.nextAction = time + randomRange(350, 760);
+                } else {
+                    state.dashPhase = 'paused';
+                    state.vx = 0;
+                    state.vy = 0;
+                    state.nextAction = time + randomRange(250, 720);
+                }
+            }
+            state.x += state.vx * dt;
+            state.y += state.vy * dt;
+            bounceAtEdges(state);
+        }
+
+        // movement 3 WANDERER: softly steers towards changing random destinations
+        function moveWanderer(state, dt, time) {
+            const b = state.bounds;
+            if (time >= state.nextTarget) {
+                state.targetX = randomRange(b.minX, b.maxX);
+                state.targetY = randomRange(b.minY, b.maxY);
+                state.nextTarget = time + randomRange(1200, 2800);
+            }
+            const waveX = Math.sin(time / 630 + state.phase) * 14;
+            const waveY = Math.cos(time / 810 + state.phase) * 10;
+            const desiredVx = clampValue((state.targetX - state.x) * 1.25 + waveX, -100, 100);
+            const desiredVy = clampValue((state.targetY - state.y) * 1.25 + waveY, -75, 75);
+            const ease = Math.min(1, dt * 2.3);
+            state.vx += (desiredVx - state.vx) * ease;
+            state.vy += (desiredVy - state.vy) * ease;
+            state.x += state.vx * dt;
+            state.y += state.vy * dt;
+            bounceAtEdges(state);
+        }
+
+        const movementFunctions = {
+            bouncer: moveBouncer,
+            dasher: moveDasher,
+            wanderer: moveWanderer
+        };
+
     }
 
     const yarn = document.querySelector('.yarn-stage');
