@@ -125,6 +125,14 @@ document.addEventListener('DOMContentLoaded', () => {
         let activeDrag = null;
         let matchCount = 0;
 
+        function showWinDialog() {
+            if (!winDialog) return;
+
+            if (typeof winDialog.showModal === 'function') {
+                winDialog.showModal();
+            }
+        }
+
         // desktop: dark/light yarns have separate left side areas, medium on right
         // mobile: each yarn has its own horizontal lane below the fabric board
         function movementBounds(state) {
