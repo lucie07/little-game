@@ -535,6 +535,12 @@ input {
 
 .win-dialog-content {
     padding: 28px;
+    min-height: 290px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     background: #f9f3ec;
     color: #3c2921;
