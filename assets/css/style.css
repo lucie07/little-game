@@ -562,3 +562,38 @@ input {
 .collect-button {
     min-width: 180px;
 }
+
+/* birthday reveal */
+
+.birthday-reveal {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.reveal-card {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px 28px;
+
+    background: #f9f3ec;
+    color: #3c2921;
+
+    cursor: default;
+}
+
+.reveal-card:hover {
+    background: #f9f3ec;
+    transform: none;
+}
+
+.reveal-card img {
+    display: block;
+
+    width: auto;
+    max-width: min(78vw, 340px);
+    max-height: 64px;
+    height: auto;
+}
