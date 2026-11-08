@@ -521,7 +521,7 @@ input {
 /* win popup */
 
 .win-dialog {
-    width: min(90%, 420px);
+    width: min(90%, 520px);
 
     padding: 0;
 
@@ -534,8 +534,8 @@ input {
 }
 
 .win-dialog-content {
-    padding: 28px;
-    min-height: 290px;
+    padding: 40px;
+    min-height: 400px;
 
     display: flex;
     flex-direction: column;
@@ -581,7 +581,7 @@ input {
     justify-content: center;
 
     width: 100%;
-    max-width: 350px;
+    max-width: 550px;
 
     padding: 10px 12px;
 }
@@ -592,7 +592,7 @@ input {
     width: 100%;
     height: auto;
 
-    max-height: 180px;
+    max-height: 280px;
     object-fit: contain;
 }
 
