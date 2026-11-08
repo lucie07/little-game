@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
         collectButton?.addEventListener('click', () => {
             revealBirthdayMessage();
         });
-                
+
         // desktop: dark/light yarns have separate left side areas, medium on right
         // mobile: each yarn has its own horizontal lane below the fabric board
         function movementBounds(state) {
@@ -374,13 +374,28 @@ document.addEventListener('DOMContentLoaded', () => {
             state.element.disabled = true;
             matchCount++;
 
-            puzzleStatus.textContent = matchCount === yarns.length
-                ? 'All three stars found! The constellation is complete.'
-                : `${matchCount} of ${yarns.length} yarns matched. Keep catching!`;
-            if (matchCount === yarns.length && puzzleFrameId !== null) {
-                cancelAnimationFrame(puzzleFrameId);
-                puzzleFrameId = null;
+            // update progress and check for victory
+            if (matchCount === yarns.length) {
+
+                // all three yarns successfully matched
+                puzzleStatus.textContent = 'Puzzle complete!';
+
+                // stop the puzzle animation
+                if (puzzleFrameId !== null) {
+                    cancelAnimationFrame(puzzleFrameId);
+                    puzzleFrameId = null;
+                }
+
+                showWinDialog();
+
+            } else {
+
+                // update progress while puzzle continues
+                puzzleStatus.textContent =
+                    `${matchCount} of ${yarns.length} yarns matched. Keep catching!`;
+
             }
+
         }
 
         function resetUnmatchedYarn(state) {
