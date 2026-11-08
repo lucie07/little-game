@@ -138,7 +138,10 @@
                     class="win-dialog"
                     aria-labelledby="win-title"
                 >
-                    <div class="win-dialog-content">
+
+                    <!-- stage 1: win message -->
+                    <div id="win-message-view" class="win-dialog-content">
+
                         <h2 id="win-title">You win!</h2>
 
                         <p class="win-message">
@@ -152,28 +155,32 @@
                         >
                             Collect
                         </button>
+
                     </div>
-                </dialog>
 
-                <!-- birthday reveal -->
-                <div
-                    id="birthday-reveal"
-                    class="birthday-reveal"
-                    hidden
-                    aria-live="polite"
-                >
-                    <button
-                        class="game-button reveal-card"
-                        type="button"
-                        aria-label="Birthday message"
+                    <!-- stage 2: birthday reveal -->
+                    <div
+                        id="birthday-reveal"
+                        class="win-dialog-content birthday-reveal"
+                        hidden
                     >
-                        <img
-                            src="assets/images/reveal-text.png"
-                            alt="Happy Birthday"
-                        >
-                    </button>
-                </div>                
 
+                        <h2 id="birthday-title" class="visually-hidden">
+                            Happy Birthday
+                        </h2>
+
+                        <div class="birthday-image-frame">
+                            <img
+                                src="assets/images/reveal-text.png"
+                                alt="Happy Birthday!"
+                                class="birthday-reveal-image"
+                            >
+                        </div>
+
+                    </div>
+
+                </dialog>
+              
                 <div id="yarn-playfield" class="yarn-playfield">
                     <button class="puzzle-yarn" data-yarn="dark" type="button"
                         aria-label="Dark olive yarn. Drag to its matching star, or press Enter to place.">
