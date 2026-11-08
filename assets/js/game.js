@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const puzzlePlayfield = document.querySelector('#yarn-playfield');
     const puzzleStatus = document.querySelector('#puzzle-status');
     const winDialog = document.querySelector('#win-dialog');
+    const winMessageView = document.querySelector('#win-message-view');
     const collectButton = document.querySelector('#collect-button');
     const birthdayReveal = document.querySelector('#birthday-reveal');
     const gameplayPanel = document.querySelector('#gameplay-screen');
