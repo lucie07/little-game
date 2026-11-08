@@ -20,18 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     // gameplay sound effects
-
-    const yarnMatchSound = new Audio('assets/audio/ui-sound-effect-small-hit.wav');
-
-    // preload audio files
-    yarnPickupSound.preload = 'auto';
-    yarnMatchSound.preload = 'auto';
-
-    // sound effect volumes
-    yarnPickupSound.volume = 0.65;
-    yarnMatchSound.volume = 0.8;
-
-    // gameplay sound effects
     const puzzleSounds = {
         pickup: {
             url: 'assets/audio/ui-sound-effect-bubble-pop.mp3',
