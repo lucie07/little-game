@@ -133,6 +133,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        function revealBirthdayMessage() {
+            if (winDialog?.open) {
+                winDialog.close();
+            }
+
+            if (birthdayReveal) {
+                birthdayReveal.hidden = false;
+            }
+
+            if (puzzleStatus) {
+                puzzleStatus.textContent = 'A birthday text has appeared.';
+            }
+        }
+
+        // collect button interaction
+        collectButton?.addEventListener('click', () => {
+            revealBirthdayMessage();
+        });
+                
         // desktop: dark/light yarns have separate left side areas, medium on right
         // mobile: each yarn has its own horizontal lane below the fabric board
         function movementBounds(state) {
