@@ -135,17 +135,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function revealBirthdayMessage() {
-            if (winDialog?.open) {
-                winDialog.close();
+
+            if (winMessageView) {
+                winMessageView.hidden = true;
             }
 
+            // reveal birthday image inside the same popup
             if (birthdayReveal) {
                 birthdayReveal.hidden = false;
             }
 
-            if (puzzleStatus) {
-                puzzleStatus.textContent = 'A birthday text has appeared.';
-            }
+            winDialog?.setAttribute(
+                'aria-labelledby',
+                'birthday-title'
+            );
+
+            // update puzzle status
+            puzzleStatus.textContent = 'You got that.';
         }
 
         // collect button interaction
