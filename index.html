@@ -132,6 +132,29 @@
                     Catch and drag...
                 </p>
 
+                <!-- win popup -->
+                <dialog
+                    id="win-dialog"
+                    class="win-dialog"
+                    aria-labelledby="win-title"
+                >
+                    <div class="win-dialog-content">
+                        <h2 id="win-title">You win!</h2>
+
+                        <p class="win-message">
+                            Cool! You got them, click to collect.
+                        </p>
+
+                        <button
+                            id="collect-button"
+                            class="game-button collect-button"
+                            type="button"
+                        >
+                            Collect
+                        </button>
+                    </div>
+                </dialog>              
+
                 <div id="yarn-playfield" class="yarn-playfield">
                     <button class="puzzle-yarn" data-yarn="dark" type="button"
                         aria-label="Dark olive yarn. Drag to its matching star, or press Enter to place.">
