@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     // gameplay sound effects
+
     const puzzleSounds = {
         pickup: {
             url: 'assets/audio/ui-sound-effect-bubble-pop.mp3',
@@ -34,6 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
         match: {
             url: 'assets/audio/ui-sound-effect-small-hit.wav',
             volume: 0.8,
+            buffer: null,
+            activeSource: null
+        },
+        shine: {
+            url: 'assets/audio/ui-sound-effect-shine.mp3',
+            volume: 0.75,
             buffer: null,
             activeSource: null
         }
