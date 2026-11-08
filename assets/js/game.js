@@ -322,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 state.targetY = state.y;
                 paintYarn(state);
             }
-            puzzleStatus.textContent = `0 of ${yarns.length} yarns matched. Catch each yarn and drag it to its star.`;
+            puzzleStatus.textContent = `0 of ${yarns.length} yarns matched. Catch each yarn and drag it to the correct position.`;
             if (!reducedMotion.matches) {
                 puzzleFrameId = requestAnimationFrame(animatePuzzle);
             }
