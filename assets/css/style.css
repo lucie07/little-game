@@ -534,7 +534,7 @@ input {
 }
 
 .win-dialog-content {
-    padding: 40px;
+    padding: 8px;
     min-height: 400px;
 
     display: flex;
