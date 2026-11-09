@@ -548,7 +548,8 @@ input {
     border: 3px dashed #fff9ec;
     border-radius: 50%;
 
-    background: rgba(255, 255, 255, 0.22);
+    background: #F5F3EB;
+
     color: #fff9ec;
 
     font-size: 26px;
@@ -603,7 +604,7 @@ input {
 }
 
 .constellation-point.is-near {
-    background: rgba(255, 255, 255, 0.32);
+    background: #FFFFFF;
     transform: translate(-50%, -50%);
 }
 
@@ -621,7 +622,7 @@ input {
 
 .constellation-point.is-matched {
     border-style: solid;
-    background: rgba(255, 255, 255, 0.28);
+    background: #F5F3EB;
     transform: translate(-50%, -50%);
 }
 
