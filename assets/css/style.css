@@ -412,19 +412,30 @@ input {
 
 .constellation-point {
     position: absolute;
-    transform: translate(-50%, -50%);
-    width: 70px;
-    height: 70px;
+
+    width: 68px;
+    height: 68px;
+
     display: grid;
     place-items: center;
-    border: 2px dashed #fff9ec;
-    border-radius: 0px;
-    background: rgba(255, 249, 236, 0.15);
+
+    border: 3px dashed #fff9ec;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.08);
     color: #fff9ec;
+
     font-size: 26px;
-    box-shadow: 0 0 16px rgba(255, 249, 236, 0.35);
+
+    box-shadow: 0 0 14px rgba(255, 249, 236, 0.22);
+
     pointer-events: none;
-    transition: background 0.2s ease, box-shadow 0.2s ease;
+
+    transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
 }
 
 /* three separate star positions, away from the board's edges */
