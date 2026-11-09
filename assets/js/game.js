@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function playPuzzleSound(type) {
         const sound = puzzleSounds[type];
 
-        if (!audioContext || !sound?.buffer) return;
+        if (!audioContext || !soundEffectsGain || !sound?.buffer) return;
 
         if (audioContext.state === 'suspended') {
             audioContext.resume().catch(error => {
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gain.gain.value = sound.volume;
 
         source.connect(gain);
-        gain.connect(audioContext.destination);
+        gain.connect(soundEffectsGain);
 
         sound.activeSource = source;
 
@@ -522,6 +522,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let musicGain = null;
     let musicLevel = 0.15;
 
+    // shared sound effects settings
+
+    let soundEffectsLevel = 1.0;
+    let soundEffectsGain = null;
+
+    // update master sound effects volume
+    function updateSoundEffectsGain() {
+
+        if (!soundEffectsGain) return;
+
+        soundEffectsGain.gain.value = soundEffectsLevel;
+
+    }
+
     // initial volume - fallback for standard HTML audio
     if (backgroundMusic) {
         backgroundMusic.volume = musicLevel;
@@ -553,6 +567,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             audioContext = context;
             musicGain = gain;
+
+            // create master sound effects volume control
+            soundEffectsGain = context.createGain();
+
+            soundEffectsGain.connect(context.destination);
+
+            updateSoundEffectsGain();
 
             // preload gameplay sound effects
             loadPuzzleSounds();
@@ -591,6 +612,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const musicVolume = document.querySelector('#music-volume');
     const musicVolumeValue = document.querySelector('#music-volume-value');
 
+    const soundEffectsVolume =
+        document.querySelector('#sound-effects-volume');
+
+    const soundEffectsVolumeValue =
+        document.querySelector('#sound-effects-volume-value');
+
     // open settings
     settingsButton.addEventListener('click', () => {
 
@@ -616,6 +643,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // update displayed percentage
         musicVolumeValue.textContent = `${musicVolume.value}%`;
+
+    });
+
+    // initialise sound effects volume
+    soundEffectsVolume.value =
+        Math.round(soundEffectsLevel * 100);
+
+    soundEffectsVolumeValue.textContent =
+        `${soundEffectsVolume.value}%`;
+
+    soundEffectsVolume.addEventListener('input', () => {
+
+        soundEffectsLevel = Number(soundEffectsVolume.value) / 100;
+
+        soundEffectsVolumeValue.textContent =
+            `${soundEffectsVolume.value}%`;
+
+        updateSoundEffectsGain();
 
     });
 
