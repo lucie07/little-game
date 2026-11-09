@@ -172,8 +172,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // collect button interaction
-        collectButton?.addEventListener('click', () => {
+        let birthdayCollected = false;
+
+        function handleCollect() {
+            if (birthdayCollected) return;
+
+            birthdayCollected = true;
             revealBirthdayMessage();
+        }
+
+        // standard click: mouse and keyboard
+        collectButton?.addEventListener('click', handleCollect);
+
+        // touchscreen fallback
+        collectButton?.addEventListener('pointerup', (event) => {
+            if (event.pointerType === 'touch') {
+                handleCollect();
+            }
         });
 
         // return to the completed constellation
