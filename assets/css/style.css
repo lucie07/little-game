@@ -137,14 +137,21 @@ input {
 
     cursor: pointer;
 
+    touch-action: manipulation;
+    
     transition:
         background 0.3s ease,
         transform 0.3s ease;
 }
 
-.game-button:hover {
-    background: #f5d8b8;
-    /* transform: translateY(-4px); */
+/* hover effects only for mouse devices */
+
+@media (hover: hover) and (pointer: fine) {
+
+    .game-button:hover {
+        background: #f5d8b8;
+    }
+
 }
 
 .game-button:focus-visible {
