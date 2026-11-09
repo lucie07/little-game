@@ -85,6 +85,7 @@
 
             <div class="settings-content">
 
+                <!-- background music settings -->
                 <div class="volume-header">
                     <label for="music-volume">Music</label>
                     <output id="music-volume-value" for="music-volume">
@@ -100,6 +101,35 @@
                     value="35"
                     step="1"
                 >
+
+                <!-- sound effects volume -->
+                <div class="sound-effects-settings">
+
+                    <div class="volume-header">
+
+                        <label for="sound-effects-volume">
+                            Sound effects
+                        </label>
+
+                        <output
+                            id="sound-effects-volume-value"
+                            for="sound-effects-volume"
+                        >
+                            100%
+                        </output>
+
+                    </div>
+
+                    <input
+                        type="range"
+                        id="sound-effects-volume"
+                        min="0"
+                        max="100"
+                        value="100"
+                        step="1"
+                    >
+
+                </div>
 
             </div>
 
