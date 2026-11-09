@@ -717,7 +717,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         yarnScreen.hidden = false;
 
-        playButton.focus({ preventScroll: true });
+        // playButton.focus({ preventScroll: true });
 
     });
 
