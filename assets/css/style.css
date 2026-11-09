@@ -438,6 +438,26 @@ input {
         transform 0.2s ease;
 }
 
+/* yarn matching colours for each constellation point */
+
+.constellation-point[data-target="dark"] {
+    border-color: #2F3622;
+    color: #2F3622;
+    box-shadow: 0 0 16px rgba(47, 54, 34, 0.24);
+}
+
+.constellation-point[data-target="medium"] {
+    border-color: #6F7C46;
+    color: #6F7C46;
+    box-shadow: 0 0 16px rgba(111, 124, 70, 0.24);
+}
+
+.constellation-point[data-target="light"] {
+    border-color: #A0AD74;
+    color: #A0AD74;
+    box-shadow: 0 0 16px rgba(160, 173, 116, 0.24);
+}
+
 /* three separate star positions, away from the board's edges */
 .constellation-point[data-target="dark"] {
     left: 26%;
@@ -455,13 +475,38 @@ input {
 }
 
 .constellation-point.is-near {
-    background: rgba(255, 249, 236, 0.35);
-    box-shadow: 0 0 26px rgba(255, 249, 236, 0.9);
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.06);
+}
+
+.constellation-point[data-target="dark"].is-near {
+    box-shadow: 0 0 24px rgba(47, 54, 34, 0.5);
+}
+
+.constellation-point[data-target="medium"].is-near {
+    box-shadow: 0 0 24px rgba(111, 124, 70, 0.5);
+}
+
+.constellation-point[data-target="light"].is-near {
+    box-shadow: 0 0 24px rgba(160, 173, 116, 0.5);
 }
 
 .constellation-point.is-matched {
     border-style: solid;
-    background: rgba(255, 249, 236, 0.25);
+    background: rgba(255, 255, 255, 0.14);
+    transform: scale(1);
+}
+
+.constellation-point[data-target="dark"].is-matched {
+    box-shadow: 0 0 18px rgba(47, 54, 34, 0.34);
+}
+
+.constellation-point[data-target="medium"].is-matched {
+    box-shadow: 0 0 18px rgba(111, 124, 70, 0.34);
+}
+
+.constellation-point[data-target="light"].is-matched {
+    box-shadow: 0 0 18px rgba(160, 173, 116, 0.34);
 }
 
 .constellation-point.is-matched .target-star {
