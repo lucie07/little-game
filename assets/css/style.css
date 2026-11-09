@@ -474,8 +474,6 @@ input {
 #gameplay-settings-button:hover {
     background: #5E4134;
     color: #FFFFFF;
-
-    transform: translateY(-2px);
 }
 
 /* keyboard focus */
