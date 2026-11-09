@@ -217,9 +217,11 @@ input {
     color: #3c2921;
 }
 
+/*
 .settings-button:hover {
     background: #ffffff;
 }
+*/    
 
 .settings-dialog {
     width: min(90%, 380px);
@@ -467,12 +469,13 @@ input {
     cursor: pointer;
 }
 
-/* hover */
+/* hover 
 
 #gameplay-settings-button:hover {
     background: #5E4134;
     color: #FFFFFF;
 }
+*/
 
 /* keyboard focus */
 
@@ -963,6 +966,28 @@ input {
     #collect-button {
         -webkit-tap-highlight-color: transparent;
         touch-action: manipulation;
+    }
+
+}
+
+/* button hover effects - desktop only */
+
+@media (hover: hover) and (pointer: fine) {
+
+    /* Start, Play, Alright, Back to land */
+    .game-button:hover {
+        background: #F5D8B8;
+    }
+
+    /* screen 2 settings */
+    .settings-button:hover {
+        background: #FFFFFF;
+    }
+
+    /* screen 3 settings */
+    #gameplay-settings-button:hover {
+        background: #5E4134;
+        color: #FFFFFF;
     }
 
 }
