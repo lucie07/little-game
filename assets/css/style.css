@@ -271,7 +271,8 @@ input {
     color: #765646;
 }
 
-#music-volume {
+#music-volume,
+#sound-effects-volume {
     display: block;
     width: 100%;
 
@@ -279,6 +280,17 @@ input {
 
     accent-color: #9b725e;
     cursor: pointer;
+}
+
+#sound-effects-volume:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+#sound-effects-toggle:focus-visible,
+#sound-effects-volume:focus-visible {
+    outline: 3px solid #9b725e;
+    outline-offset: 4px;
 }
 
 .volume-labels {
@@ -297,6 +309,39 @@ input {
     outline: 3px solid #9b725e;
     outline-offset: 4px;
 }
+
+/* sound effects settings */
+
+.sound-effects-settings {
+    margin-top: 28px;
+    padding-top: 24px;
+
+    border-top: 1px solid #ddd1c7;
+}
+
+.sound-effects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 24px;
+}
+
+.sound-effects-header label {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+#sound-effects-toggle {
+    width: 18px;
+    height: 18px;
+
+    margin: 0;
+
+    accent-color: #9b725e;
+    cursor: pointer;
+}
+
 /* end of global and screens 1–2 */
 
 /* screen 3: three yarn constellation puzzle */
