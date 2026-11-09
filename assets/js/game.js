@@ -619,10 +619,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // settings window
 
-    // elements
-    const settingsButton = document.querySelector('#settings-button');
-    const settingsDialog = document.querySelector('#settings-dialog');
-    const closeSettings = document.querySelector('#close-settings');
+    const settingsButton =
+        document.querySelector('#settings-button');
+
+    const gameplaySettingsButton =
+        document.querySelector('#gameplay-settings-button');
+
+    const settingsDialog =
+        document.querySelector('#settings-dialog');
+
+    const closeSettings =
+        document.querySelector('#close-settings');
 
     const musicVolume = document.querySelector('#music-volume');
     const musicVolumeValue = document.querySelector('#music-volume-value');
@@ -633,12 +640,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const soundEffectsVolumeValue =
         document.querySelector('#sound-effects-volume-value');
 
-    // open settings
-    settingsButton.addEventListener('click', () => {
+    // reusable settings window function
+    function openSettingsDialog() {
+        if (!settingsDialog.open) {
+            settingsDialog.showModal();
+        }
+    }
 
-        settingsDialog.showModal();
+    // screen 2 settings button
+    settingsButton.addEventListener('click', openSettingsDialog);
 
-    });
+    // screen 3 settings button
+    gameplaySettingsButton.addEventListener('click', openSettingsDialog);
 
     closeSettings.addEventListener('click', () => {
 
