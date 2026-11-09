@@ -949,42 +949,20 @@ input {
     text-align: center;
 }
 
-/* disable button hover effects on touchscreens */
-
-@media (hover: none) and (pointer: coarse) {
-
-    .game-button:hover {
-        transform: none;
-    }
-
-    #play-button:focus,
-    #play-button:focus-visible {
-        outline: none;
-        box-shadow: none;
-    }
-
-    /* remove mobile tap highlight */
-    #play-button {
-        -webkit-tap-highlight-color: transparent;
-    }
-
-}
+/* mobile: remove Alright button focus styling */
 
 @media (max-width: 820px) {
 
-    #play-button:focus,
-    #play-button:focus-visible,
-    #play-button:active {
+    #collect-button:focus,
+    #collect-button:focus-visible,
+    #collect-button:active {
         outline: none !important;
         box-shadow: none !important;
     }
 
-    #play-button {
+    #collect-button {
         -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
     }
 
-}
-
-#play-button {
-    background: #ff00ff !important;
 }
