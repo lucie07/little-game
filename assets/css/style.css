@@ -826,7 +826,7 @@ input {
 
     #gameplay-screen {
         --puzzle-yarn-size: 80px;
-        --puzzle-target-size: 90px;
+        --puzzle-target-size: 86px;
     }
 
     .constellation-point {
