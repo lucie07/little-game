@@ -138,27 +138,27 @@ input {
     cursor: pointer;
 
     touch-action: manipulation;
-    
+
     transition:
         background 0.3s ease,
         transform 0.3s ease;
 }
 
-/* hover effects only for mouse devices */
+/* disable button hover effects on touchscreens */
 
-@media (hover: hover) and (pointer: fine) {
+@media (hover: none) and (pointer: coarse) {
 
     .game-button:hover {
-        background: #f5d8b8;
+        transform: none;
     }
 
 }
-
+/*
 .game-button:focus-visible {
     outline: 3px solid #fff;
     outline-offset: 4px;
 }
-
+*/
 /* screen 2 buttons container */
 
 #game {
