@@ -550,22 +550,6 @@ input {
     box-shadow: 0 0 16px rgba(160, 173, 116, 0.24);
 }
 
-/* three separate star positions, away from the board's edges */
-.constellation-point[data-target="dark"] {
-    left: 26%;
-    top: 27%;
-}
-
-.constellation-point[data-target="medium"] {
-    left: 72%;
-    top: 40%;
-}
-
-.constellation-point[data-target="light"] {
-    left: 43%;
-    top: 73%;
-}
-
 .constellation-point.is-near {
     background: rgba(255, 255, 255, 0.2);
     transform: translate(-50%, -50%);
