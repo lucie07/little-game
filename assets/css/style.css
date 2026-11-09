@@ -513,21 +513,21 @@ input {
         border-color 0.2s ease,
 }
 
-/* three interactive points within the constellation */
+/* three interactive points aligned with constellation dots */
 
 .constellation-point[data-target="dark"] {
-    left: 23%;
-    top: 75%;
+    left: 28%;
+    top: 51%;
 }
 
 .constellation-point[data-target="medium"] {
-    left: 55%;
-    top: 45%;
+    left: 85%;
+    top: 35%;
 }
 
 .constellation-point[data-target="light"] {
-    left: 77%;
-    top: 21%;
+    left: 47%;
+    top: 78%;
 }
 
 /* yarn matching colours for each constellation point */
@@ -723,7 +723,7 @@ input {
         width: clamp(66px, 18vw, 82px);
         height: clamp(66px, 18vw, 82px);
     }
-    
+
     .constellation-dot {
         width: 8px;
         height: 8px;
