@@ -609,8 +609,8 @@ input {
     }
 
     .constellation-point {
-        width: 64px;
-        height: 64px;
+        width: 90px;
+        height: 90px;
     }
 
     .constellation-point .puzzle-yarn.is-matched {
