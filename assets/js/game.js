@@ -150,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // reveal birthday image inside the same popup
             if (birthdayReveal) {
                 birthdayReveal.hidden = false;
+
             }
 
             winDialog?.setAttribute(
