@@ -74,86 +74,24 @@
 
         </div>
 
-        <!-- settings window -->
-        <dialog
-            id="settings-dialog"
-            class="settings-dialog"
-            aria-labelledby="settings-title"
-        >
-
-            <div class="settings-header">
-
-                <h2 id="settings-title">Settings</h2>
-
-                <button
-                    id="close-settings"
-                    class="close-settings"
-                    type="button"
-                    aria-label="Close settings"
-                >
-                    &times;
-                </button>
-
-            </div>
-
-            <div class="settings-content">
-
-                <!-- background music settings -->
-                <div class="volume-header">
-                    <label for="music-volume">Music</label>
-                    <output id="music-volume-value" for="music-volume">
-                        35%
-                    </output>
-                </div>
-
-                <input
-                    type="range"
-                    id="music-volume"
-                    min="0"
-                    max="100"
-                    value="35"
-                    step="1"
-                >
-
-                <!-- sound effects volume -->
-                <div class="sound-effects-settings">
-
-                    <div class="volume-header">
-
-                        <label for="sound-effects-volume">
-                            Sound effects
-                        </label>
-
-                        <output
-                            id="sound-effects-volume-value"
-                            for="sound-effects-volume"
-                        >
-                            100%
-                        </output>
-
-                    </div>
-
-                    <input
-                        type="range"
-                        id="sound-effects-volume"
-                        min="0"
-                        max="100"
-                        value="100"
-                        step="1"
-                    >
-
-                </div>
-
-            </div>
-
-        </dialog>
-
     </main>
 
     <!-- screen 3: gameplay, three yarn constellation puzzle -->
     <main id="gameplay-screen" hidden>
         <!-- layer 1 static cream background -->
         <div class="gameplay-background" aria-hidden="true"></div>
+
+        <!-- gameplay settings button -->
+        <button
+            id="gameplay-settings-button"
+            class="game-button settings-button gameplay-settings-button"
+            type="button"
+            aria-haspopup="dialog"
+            aria-controls="settings-dialog"
+        >
+            Settings
+        </button>
+
         <div class="gameplay-content">
             <h2 id="gameplay-heading" class="sr-only" tabindex="-1">Constellation puzzle</h2>
 
@@ -296,6 +234,80 @@
             </div>
         </div>
     </main>
+
+    <!-- settings window -->
+    <dialog
+        id="settings-dialog"
+        class="settings-dialog"
+        aria-labelledby="settings-title"
+    >
+
+        <div class="settings-header">
+
+            <h2 id="settings-title">Settings</h2>
+
+            <button
+                id="close-settings"
+                class="close-settings"
+                type="button"
+                aria-label="Close settings"
+            >
+                &times;
+            </button>
+
+        </div>
+
+        <div class="settings-content">
+
+            <!-- background music settings -->
+            <div class="volume-header">
+                <label for="music-volume">Music</label>
+                <output id="music-volume-value" for="music-volume">
+                    35%
+                </output>
+            </div>
+
+            <input
+                type="range"
+                id="music-volume"
+                min="0"
+                max="100"
+                value="35"
+                step="1"
+            >
+
+            <!-- sound effects volume -->
+            <div class="sound-effects-settings">
+
+                <div class="volume-header">
+
+                    <label for="sound-effects-volume">
+                        Sound effects
+                    </label>
+
+                    <output
+                        id="sound-effects-volume-value"
+                        for="sound-effects-volume"
+                    >
+                        100%
+                    </output>
+
+                </div>
+
+                <input
+                    type="range"
+                    id="sound-effects-volume"
+                    min="0"
+                    max="100"
+                    value="100"
+                    step="1"
+                >
+
+            </div>
+
+        </div>
+
+    </dialog>
 
     <!-- background music -->
     <audio id="background-music" loop preload="auto">
