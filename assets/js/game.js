@@ -151,6 +151,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (birthdayReveal) {
                 birthdayReveal.hidden = false;
 
+                // call the audio, play shine sound 1 second after image appears
+                setTimeout(() => {
+                    if (!birthdayReveal.hidden && winDialog?.open) {
+                        playPuzzleSound('shine');
+                    }
+                }, 1000);
             }
 
             winDialog?.setAttribute(
