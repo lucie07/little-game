@@ -367,6 +367,9 @@ input {
     isolation: isolate;
     background: #F5EEDC;
     color: #473A32;
+
+    --puzzle-yarn-size: 90px;
+    --puzzle-target-size: 116px;
 }
 
 .gameplay-background {
@@ -411,10 +414,15 @@ input {
 }
 
 .constellation-point {
-    position: absolute;
+    
+    width: var(--puzzle-target-size);
+    height: var(--puzzle-target-size);
 
-    width: 68px;
-    height: 68px;
+    border-width: 4px;
+    border-style: dashed;
+    border-radius: 50%;
+    
+    position: absolute;
 
     display: grid;
     place-items: center;
@@ -476,7 +484,7 @@ input {
 
 .constellation-point.is-near {
     background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.06);
+    transform: translate(-50%, -50%) scale(1.06);
 }
 
 .constellation-point[data-target="dark"].is-near {
@@ -494,7 +502,7 @@ input {
 .constellation-point.is-matched {
     border-style: solid;
     background: rgba(255, 255, 255, 0.14);
-    transform: scale(1);
+    transform: translate(-50%, -50%);
 }
 
 .constellation-point[data-target="dark"].is-matched {
@@ -536,6 +544,14 @@ input {
     -webkit-user-select: none;
 }
 
+
+/* three moving yarns */
+
+#yarn-playfield .puzzle-yarn {
+    width: var(--puzzle-yarn-size);
+    height: var(--puzzle-yarn-size);
+}
+
 .puzzle-yarn img {
     display: block;
     width: 100%;
@@ -552,13 +568,16 @@ input {
 
 .constellation-point .puzzle-yarn.is-matched {
     position: absolute;
+
     left: 50%;
     top: 50%;
-    width: 82px;
-    height: 82px;
+
+    width: var(--puzzle-yarn-size);
+    height: var(--puzzle-yarn-size);
+
     transform: translate(-50%, -50%);
+
     cursor: default;
-    pointer-events: none;
 }
 
 .puzzle-yarn:disabled {
@@ -608,9 +627,13 @@ input {
         height: clamp(66px, 18vw, 82px);
     }
 
+    #gameplay-screen {
+        --puzzle-yarn-size: 82px;
+        --puzzle-target-size: 106px;
+    }
+
     .constellation-point {
-        width: 90px;
-        height: 90px;
+        border-width: 3px;
     }
 
     .constellation-point .puzzle-yarn.is-matched {
