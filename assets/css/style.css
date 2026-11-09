@@ -404,7 +404,7 @@ input {
     width: min(60%, 680px);
     aspect-ratio: 4 / 3;
     z-index: 1;
-    background-image: url("../images/fabric-texture-background.png");
+    background-image: url("../images/light-brown-pattern.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -425,7 +425,7 @@ input {
     position: absolute;
 
     transform: translate(-50%, -50%);
-    
+
     display: grid;
     place-items: center;
 
