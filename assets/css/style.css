@@ -548,12 +548,14 @@ input {
     border: 3px dashed #fff9ec;
     border-radius: 50%;
 
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.22);
     color: #fff9ec;
 
     font-size: 26px;
 
-    box-shadow: 0 0 14px rgba(255, 249, 236, 0.22);
+    box-shadow:
+        inset 0 0 18px rgba(255, 255, 255, 0.18),
+        0 0 18px rgba(255, 255, 255, 0.08);
 
     pointer-events: none;
 
@@ -601,7 +603,7 @@ input {
 }
 
 .constellation-point.is-near {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.32);
     transform: translate(-50%, -50%);
 }
 
@@ -619,7 +621,7 @@ input {
 
 .constellation-point.is-matched {
     border-style: solid;
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.28);
     transform: translate(-50%, -50%);
 }
 
