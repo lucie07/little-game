@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const birthdayReveal = document.querySelector('#birthday-reveal');
     const gameplayPanel = document.querySelector('#gameplay-screen');
 
+    const backToLandButton =
+        document.querySelector('#back-to-land-button');
+
     const yarnConfigs = {
         dark:   { personality: 'bouncer',  zone: 'left-top' },
         medium: { personality: 'dasher',   zone: 'right' },
@@ -171,6 +174,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // collect button interaction
         collectButton?.addEventListener('click', () => {
             revealBirthdayMessage();
+        });
+
+        // return to the completed constellation
+        backToLandButton?.addEventListener('click', () => {
+
+            if (winDialog?.open) {
+                winDialog.close();
+            }
+
+            document.querySelector('#gameplay-heading')
+                ?.focus({ preventScroll: true });
+
         });
 
         // desktop: dark/light yarns have separate left side areas, medium on right
