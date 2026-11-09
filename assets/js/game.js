@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
             );
 
             // update puzzle status
-            puzzleStatus.textContent = 'You've got that.';
+            puzzleStatus.textContent = "You've got that.";
         }
 
         // collect button interaction
