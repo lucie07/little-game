@@ -969,3 +969,18 @@ input {
     }
 
 }
+
+@media (max-width: 820px) {
+
+    #play-button:focus,
+    #play-button:focus-visible,
+    #play-button:active {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    #play-button {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+}
