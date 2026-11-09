@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const puzzleSounds = {
         pickup: {
             url: 'assets/audio/ui-sound-effect-bubble-pop.mp3',
-            volume: 0.65,
+            volume: 0.8,
             buffer: null,
             activeSource: null
         },
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         shine: {
             url: 'assets/audio/ui-sound-effect-shine.mp3',
-            volume: 0.75,
+            volume: 0.95,
             buffer: null,
             activeSource: null
         }
