@@ -424,6 +424,8 @@ input {
     
     position: absolute;
 
+    transform: translate(-50%, -50%);
+    
     display: grid;
     place-items: center;
 
@@ -443,7 +445,6 @@ input {
         background 0.2s ease,
         box-shadow 0.2s ease,
         border-color 0.2s ease,
-        transform 0.2s ease;
 }
 
 /* yarn matching colours for each constellation point */
@@ -484,7 +485,7 @@ input {
 
 .constellation-point.is-near {
     background: rgba(255, 255, 255, 0.2);
-    transform: translate(-50%, -50%) scale(1.06);
+    transform: translate(-50%, -50%);
 }
 
 .constellation-point[data-target="dark"].is-near {
@@ -543,7 +544,6 @@ input {
     user-select: none;
     -webkit-user-select: none;
 }
-
 
 /* three moving yarns */
 
