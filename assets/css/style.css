@@ -439,23 +439,57 @@ input {
 
 /* screen 3 settings button */
 
-#gameplay-screen .gameplay-settings-button {
+
+/* screen 3 settings button */
+
+#gameplay-settings-button {
     position: absolute;
 
     top: 24px;
     right: 24px;
 
-    z-index: 10;
+    z-index: 20;
 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: auto;
     padding: 12px 24px;
+
+    background: #3C2921;
+    color: #F9F3EC;
+
+    border: 2px solid #3C2921;
+    border-radius: 0;
 
     font-size: 1rem;
     letter-spacing: 0.05em;
+
+    cursor: pointer;
 }
+
+/* hover */
+
+#gameplay-settings-button:hover {
+    background: #5E4134;
+    color: #FFFFFF;
+
+    transform: translateY(-2px);
+}
+
+/* keyboard focus */
+
+#gameplay-settings-button:focus-visible {
+    outline: 3px solid #765F4C;
+    outline-offset: 4px;
+}
+
+/* mobile */
 
 @media (max-width: 820px) {
 
-    #gameplay-screen .gameplay-settings-button {
+    #gameplay-settings-button {
         top: 12px;
         right: 12px;
 
