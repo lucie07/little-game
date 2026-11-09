@@ -407,10 +407,11 @@ input {
 
     background:
         radial-gradient(
-            ellipse at 50% 45%,
-            #1D3353 0%,
-            #101F38 55%,
-            #081426 100%
+            ellipse at 50% 48%,
+            #314761 0%,
+            #23364C 42%,
+            #182739 72%,
+            #0F1825 100%
         );
 
     border-radius: 0px;
